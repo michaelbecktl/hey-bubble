@@ -7,7 +7,8 @@ SplashScreen.preventAutoHideAsync()
 type AuthState = {
   isReady: boolean
   isLoggedIn: boolean
-  logIn: () => void
+  userId: number | null
+  logIn: (id: number) => void
   logOut: () => void
 }
 
@@ -16,13 +17,15 @@ const authStorageKey = 'auth-key'
 export const AuthContext = createContext<AuthState>({
   isReady: false,
   isLoggedIn: false,
-  logIn: () => {},
+  userId: null,
+  logIn: (id: number) => {},
   logOut: () => {},
 })
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [isReady, setIsReady] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [userId, setUserId] = useState<number | null>(null)
   const router = useRouter()
 
   const storeAuthState = async (newState: { isLoggedIn: boolean }) => {
@@ -34,14 +37,16 @@ export function AuthProvider({ children }: PropsWithChildren) {
     }
   }
 
-  const logIn = () => {
+  const logIn = (id: number) => {
     setIsLoggedIn(true)
+    setUserId(id)
     storeAuthState({ isLoggedIn: true })
     router.replace('/')
   }
 
   const logOut = () => {
     setIsLoggedIn(false)
+    setUserId(null)
     storeAuthState({ isLoggedIn: false })
     router.replace('/login')
   }
@@ -73,6 +78,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
       value={{
         isReady,
         isLoggedIn,
+        userId,
         logIn,
         logOut,
       }}

@@ -8,30 +8,18 @@ export async function seed(knex) {
   await knex('user').insert([
     {
       username: 'maya91',
-      display_name: 'Maya',
+      password: 'test',
       email: 'maya@heybubble.co.nz',
-      dob: null,
-      gender: 'Female',
-      native_language: 'EN',
-      learning_language: 'JP',
     },
     {
       username: 'alicewonder',
-      display_name: 'Alice',
+      password: 'test',
       email: 'alice@heybubble.co.nz',
-      dob: null,
-      gender: 'Female',
-      native_language: 'EN',
-      learning_language: 'JP',
     },
     {
       username: 'hanamorijp',
-      display_name: 'Hana',
+      password: 'test',
       email: 'hana@heybubble.co.nz',
-      dob: null,
-      gender: 'Female',
-      native_language: 'JP',
-      learning_language: 'EN',
     },
   ])
 }
