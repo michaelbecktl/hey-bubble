@@ -28,7 +28,10 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const [userId, setUserId] = useState<number | null>(null)
   const router = useRouter()
 
-  const storeAuthState = async (newState: { isLoggedIn: boolean }) => {
+  const storeAuthState = async (newState: {
+    isLoggedIn: boolean
+    userId: number | null
+  }) => {
     try {
       const jsonValue = JSON.stringify(newState)
       await AsyncStorage.setItem(authStorageKey, jsonValue)
@@ -37,21 +40,28 @@ export function AuthProvider({ children }: PropsWithChildren) {
     }
   }
 
+  // Takes user ID from API request after successful login to store for retrieving user relevant data post login
   const logIn = (id: number) => {
     setIsLoggedIn(true)
     setUserId(id)
-    storeAuthState({ isLoggedIn: true })
+
+    // Saves login history to remember use if app has been closed and reopened
+    storeAuthState({ isLoggedIn: true, userId: userId })
     router.replace('/')
   }
 
+  // Removes user ID from context and takes the user back to login page
   const logOut = () => {
     setIsLoggedIn(false)
     setUserId(null)
-    storeAuthState({ isLoggedIn: false })
+
+    // Saves logout history to remember use if app has been closed and reopened
+    storeAuthState({ isLoggedIn: false, userId: userId })
     router.replace('/login')
   }
 
   useEffect(() => {
+    // Reattempt to check and verify if user is logged in from auth history
     const getAuthFromStorage = async () => {
       try {
         const value = await AsyncStorage.getItem(authStorageKey)

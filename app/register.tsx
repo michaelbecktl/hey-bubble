@@ -1,18 +1,13 @@
 import AppButton from '@/components/AppButton'
 import { AuthContext } from '@/utils/AuthContext'
-import { useRouter } from 'expo-router'
 import { useContext, useState } from 'react'
 import { StyleSheet, Text, TextInput, View } from 'react-native'
 
 export default function LoginScreen() {
-  const router = useRouter()
   const authContext = useContext(AuthContext)
   const [username, onChangeUsername] = useState('')
+  const [email, onChangeEmail] = useState('')
   const [password, onChangePassword] = useState('')
-
-  const redirectToRegister = () => {
-    router.push('/register')
-  }
 
   return (
     <View style={styles.container}>
@@ -23,16 +18,20 @@ export default function LoginScreen() {
         onChangeText={onChangeUsername}
         style={styles.textField}
       />
+      <Text>Email</Text>
+      <TextInput
+        value={email}
+        onChangeText={onChangeEmail}
+        style={styles.textField}
+      />
       <Text>Password</Text>
       <TextInput
         value={password}
         onChangeText={onChangePassword}
         style={styles.textField}
       />
-      <View style={{ marginBottom: 10 }}>
-        <AppButton label="Login" onPress={authContext.logIn} size="large" />
-      </View>
-      <AppButton label="Register" onPress={redirectToRegister} size="large" />
+
+      <AppButton label="Register" onPress={authContext.logIn} size="large" />
     </View>
   )
 }
