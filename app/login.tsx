@@ -1,39 +1,44 @@
 import AppButton from '@/components/AppButton'
+import LoginPopup from '@/components/LoginPopup'
 import { AuthContext } from '@/utils/AuthContext'
 import { useRouter } from 'expo-router'
 import { useContext, useState } from 'react'
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 export default function LoginScreen() {
   const router = useRouter()
   const authContext = useContext(AuthContext)
-  const [username, onChangeUsername] = useState('')
-  const [password, onChangePassword] = useState('')
+
+  const [loginVisible, setLoginVisible] = useState<boolean>(false)
 
   const redirectToRegister = () => {
     router.push('/register')
   }
 
+  // To be used for graying out main menu while popup is active
+  // function isPopupVisible() {
+  //   if (loginVisible) return true
+  //   else return false
+  // }
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Hey Bubble!</Text>
-      <Text>Username</Text>
-      <TextInput
-        value={username}
-        onChangeText={onChangeUsername}
-        style={styles.textField}
-      />
-      <Text>Password</Text>
-      <TextInput
-        value={password}
-        onChangeText={onChangePassword}
-        style={styles.textField}
-      />
-      <View style={{ marginBottom: 10 }}>
-        <AppButton label="Login" onPress={authContext.logIn} size="large" />
+    <>
+      <View style={styles.container}>
+        <Text style={styles.title}>Hey Bubble!</Text>
+        <View style={{ marginBottom: 10 }}>
+          <AppButton
+            label="Login"
+            onPress={() => setLoginVisible(true)} // Replace with actual login logic
+            size="large"
+          />
+        </View>
+        <AppButton label="Register" onPress={redirectToRegister} size="large" />
       </View>
-      <AppButton label="Register" onPress={redirectToRegister} size="large" />
-    </View>
+      <LoginPopup
+        loginVisible={loginVisible}
+        setModalVisible={setLoginVisible}
+      />
+    </>
   )
 }
 
