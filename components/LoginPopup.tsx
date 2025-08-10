@@ -13,6 +13,11 @@ export default function LoginPopup({ loginVisible, setModalVisible }: Props) {
   const [username, onChangeUsername] = useState('')
   const [password, onChangePassword] = useState('')
 
+  function attemptLogin() {
+    // Replace with actual login logic
+    setModalVisible(!loginVisible)
+  }
+
   return (
     <Modal
       animationType="fade"
@@ -22,22 +27,23 @@ export default function LoginPopup({ loginVisible, setModalVisible }: Props) {
     >
       <View style={styles.container}>
         <View style={styles.modalView}>
-          <Text style={styles.text}>Username</Text>
+          <Text style={styles.textFieldTitle}>Username or email address</Text>
           <TextInput
             value={username}
             onChangeText={onChangeUsername}
             style={styles.textField}
           />
-          <Text style={styles.text}>Password</Text>
+          <Text style={styles.textFieldTitle}>Password</Text>
           <TextInput
             value={password}
             onChangeText={onChangePassword}
             style={styles.textField}
+            secureTextEntry={true}
           />
           <View style={{ marginBottom: 10 }}>
             <AppButton
               label="Login"
-              onPress={() => setModalVisible(false)} // Replace with actual login logic
+              onPress={attemptLogin} // Replace with actual login logic
               size="large"
             />
           </View>
@@ -69,9 +75,10 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  text: {
+  textFieldTitle: {
     alignSelf: 'flex-start',
     marginLeft: 5,
+    fontWeight: 'bold',
   },
   textField: {
     width: 250,
