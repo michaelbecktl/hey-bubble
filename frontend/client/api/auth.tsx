@@ -1,12 +1,7 @@
+import { UserCredentials } from '@/models/models'
 import request from 'superagent'
 
 const rootURL = new URL(`http://localhost:3000/auth`, document.baseURI)
-
-type UserCredentials = {
-  username: string
-  password: string
-  email?: string
-}
 
 export async function LoginUser({ username, password }: UserCredentials) {
   try {
