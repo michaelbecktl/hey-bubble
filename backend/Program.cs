@@ -3,12 +3,13 @@ using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
 Env.Load();
+
+var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -24,7 +25,9 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+app.MapControllers();
+
+// app.UseHttpsRedirection();
 
 var summaries = new[]
 {

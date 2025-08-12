@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v1/user")]
 public class UserController : ControllerBase
 {
   private readonly AppDbContext _context;
@@ -18,7 +18,7 @@ public class UserController : ControllerBase
   {
     _context.Users.Add(newUser);
     await _context.SaveChangesAsync();
-    return CreatedAtAction(nameof(Get), new { id = newUser.id }, newUser);
+    return CreatedAtAction(nameof(Get), new { id = newUser.Id }, newUser);
   }
 
 }
