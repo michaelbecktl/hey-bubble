@@ -1,3 +1,7 @@
+# =========================
+# FRONTEND
+# =========================
+
 # dependencies
 frontend/node_modules/
 
@@ -36,3 +40,19 @@ frontend/*.tsbuildinfo
 
 # Example app files
 frontend/app-example
+
+# =========================
+# BACKEND
+# =========================
+
+backend/bin
+backend/obj
+backend/*.user
+backend/*.suo
+backend/*.pdb
+backend/*.mdb
+backend/*.log
+
+# local env files
+backend/.env
+backend/.env*.local
