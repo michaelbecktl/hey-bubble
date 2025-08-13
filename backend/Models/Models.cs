@@ -11,13 +11,13 @@ namespace Backend.Models
     public int Id { get; set; }
 
     [StringLength(30, MinimumLength = 3)]
-    public string Username { get; set; }
+    public required string Username { get; set; }
 
     [StringLength(16, MinimumLength = 8)]
-    public string Password { get; set; }
+    public required string Password { get; set; }
 
     [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$")]
-    public string Email { get; set; }
+    public required string Email { get; set; }
   }
 
       // User's Profile Information Model //
@@ -28,19 +28,19 @@ namespace Backend.Models
       public int UserId { get; set; }
 
       [StringLength(30, MinimumLength = 3)]
-      public string DisplayName { get; set; }
+      public required string DisplayName { get; set; }
 
       public DateOnly Dob { get; set; }
 
       public string? ProfilePhoto { get; set; }
 
-      public string Gender { get; set; }
+      public required string Gender { get; set; }
 
-      public string Country { get; set; }
+      public required string Country { get; set; }
 
-      public string NativeLanguage { get; set; }
+      public required string NativeLanguage { get; set; }
 
-      public string LearningLanguage { get; set; }
+      public required string LearningLanguage { get; set; }
 
     }
 }
