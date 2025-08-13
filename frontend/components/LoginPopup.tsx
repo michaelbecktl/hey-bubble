@@ -1,7 +1,7 @@
-import { useAuth } from '@/client/hooks/auth'
-import AppButton from '@/components/AppButton'
-import { UserCredentials } from '@/models/models'
-import { AuthContext } from '@/utils/AuthContext'
+import { useAuth } from '../client/hooks/auth'
+import AppButton from '../components/AppButton'
+import { UserCredentials } from '../models/models'
+import { AuthContext } from '../utils/AuthContext'
 import { useContext, useState } from 'react'
 import { Modal, StyleSheet, Text, TextInput, View } from 'react-native'
 
@@ -15,15 +15,29 @@ export default function LoginPopup({ loginVisible, setModalVisible }: Props) {
   const authContext = useContext(AuthContext)
   const [username, onChangeUsername] = useState('')
   const [password, onChangePassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
-  async function attemptLogin() {
-    const loginDetails: UserCredentials = {
-      username: username,
-      password: password,
+  async function onPressLogin() {
+    // Login Request Function
+    async function attemptLogin() {
+      const loginDetails: UserCredentials = {
+        username: username,
+        password: password,
+      }
+      return await auth.loginUser.mutateAsync(loginDetails)
     }
-    const response = await auth.loginUser.mutateAsync(loginDetails)
-    console.log(response)
-    setModalVisible(!loginVisible)
+
+    // Login should return Id after successful login
+    const response = await attemptLogin()
+
+    if (!response.id) {
+      alert(response.message)
+      setErrorMessage(response.message)
+    } else {
+      // Should close login popup screen and renavigate to main page
+      setModalVisible(!loginVisible)
+      authContext.logIn(response.id)
+    }
   }
 
   return (
@@ -48,12 +62,11 @@ export default function LoginPopup({ loginVisible, setModalVisible }: Props) {
             style={styles.textField}
             secureTextEntry={true}
           />
+          <View>
+            <Text style={styles.error}>{errorMessage}</Text>
+          </View>
           <View style={{ marginBottom: 10 }}>
-            <AppButton
-              label="Login"
-              onPress={attemptLogin} // Replace with actual login logic
-              size="large"
-            />
+            <AppButton label="Login" onPress={onPressLogin} size="large" />
           </View>
         </View>
       </View>
@@ -96,5 +109,9 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 20,
     textAlign: 'center',
+  },
+  error: {
+    margin: 5,
+    color: '#ff0000ff',
   },
 })
