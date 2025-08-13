@@ -35,8 +35,8 @@ namespace backend.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -52,21 +52,21 @@ namespace backend.Migrations
                         {
                             Id = -1,
                             Email = "maya@heybubble.co.nz",
-                            Password = "mayatest",
+                            Password = "$2a$12$J8d2vGlMWUiW6dWIszp2F.rzAw7qBYq5Hbd/6ijGX5o6x3Q5oX2G2",
                             Username = "mayauser"
                         },
                         new
                         {
                             Id = -3,
                             Email = "alice@heybubble.co.nz",
-                            Password = "alicetest",
+                            Password = "$2a$11$fzXCnjrZ3KKnm3nI1nbdm.XQjaF3x/mXUIcmWMe3r2dMjBsSuRQ7u",
                             Username = "aliceuser"
                         },
                         new
                         {
                             Id = -2,
                             Email = "hana@heybubble.co.nz",
-                            Password = "hanatest",
+                            Password = "$2a$12$kMngNi/lnbyCxnixyC7Swuq99AWEvm9YGk8M.y9uneD49W3wJqvWm",
                             Username = "hanauser"
                         });
                 });

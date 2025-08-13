@@ -13,7 +13,7 @@ namespace Backend.Models
     [StringLength(30, MinimumLength = 3)]
     public required string Username { get; set; }
 
-    [StringLength(16, MinimumLength = 8)]
+    [StringLength(100, MinimumLength = 8)]
     public required string Password { get; set; }
 
     [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$")]

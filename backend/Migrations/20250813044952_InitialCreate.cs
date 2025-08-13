@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -19,7 +19,7 @@ namespace backend.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Username = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -32,9 +32,9 @@ namespace backend.Migrations
                 columns: new[] { "Id", "Email", "Password", "Username" },
                 values: new object[,]
                 {
-                    { -3, "alice@heybubble.co.nz", "alicetest", "aliceuser" },
-                    { -2, "hana@heybubble.co.nz", "hanatest", "hanauser" },
-                    { -1, "maya@heybubble.co.nz", "mayatest", "mayauser" }
+                    { -3, "alice@heybubble.co.nz", "$2a$11$fzXCnjrZ3KKnm3nI1nbdm.XQjaF3x/mXUIcmWMe3r2dMjBsSuRQ7u", "aliceuser" },
+                    { -2, "hana@heybubble.co.nz", "$2a$12$kMngNi/lnbyCxnixyC7Swuq99AWEvm9YGk8M.y9uneD49W3wJqvWm", "hanauser" },
+                    { -1, "maya@heybubble.co.nz", "$2a$12$J8d2vGlMWUiW6dWIszp2F.rzAw7qBYq5Hbd/6ijGX5o6x3Q5oX2G2", "mayauser" }
                 });
         }
 

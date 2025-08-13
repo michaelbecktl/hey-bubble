@@ -5,15 +5,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 [ApiController]
-[Route("api/v1/user/register")]
+[Route("api/v1/user")]
 public class UserController : ControllerBase
 {
   private readonly AppDbContext _context;
   public UserController(AppDbContext context) => _context = context;
 
+    public class UserDTO
+  {
+    public int Id { get; set; }
+    public required string Username { get; set; }
+    public required string Email { get; set; }
+  }
+
   [HttpGet]
-  public async Task<IEnumerable<User>> Get() =>
-  await _context.Users.ToListAsync();
+
+  public async Task<IEnumerable<UserDTO>> Get() =>
+  await _context.Users
+  .Select(user => new UserDTO { Id = user.Id, Username = user.Username, Email = user.Email })
+  .ToListAsync();
 
 
   [HttpPost]
@@ -36,10 +46,34 @@ public class UserController : ControllerBase
     Console.WriteLine(newUser.Password);
 
     return Ok();
- 
+
     // _context.Users.Add(newUser);
     // await _context.SaveChangesAsync();
     // return CreatedAtAction(nameof(Get), new { id = newUser.Id }, newUser);
   }
 
+  [HttpDelete("{user}")]
+  public async Task<IActionResult> Delete(string user)
+  {
+    {
+      if (string.IsNullOrWhiteSpace(user))
+      {
+        return BadRequest(new { message = "Username must be provided." });
+      }
+
+      var deleted = await _context.Users
+        .Where(users => users.Username == user)
+        .ExecuteDeleteAsync();
+
+      if (deleted > 0)
+      {
+        return Ok(new { message = "User deleted successfully" });
+      }
+      else
+      {
+        return NotFound(new { message = "User not found" });
+      }
+    }
+
+  }
 }

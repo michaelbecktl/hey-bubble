@@ -15,21 +15,21 @@ public class AppDbContext : DbContext
       {
         Id = -1,
         Username = "mayauser",
-        Password = "mayatest",
+        Password = "$2a$12$J8d2vGlMWUiW6dWIszp2F.rzAw7qBYq5Hbd/6ijGX5o6x3Q5oX2G2",
         Email = "maya@heybubble.co.nz",
       },
       new User
       {
         Id = -3,
         Username = "aliceuser",
-        Password = "alicetest",
+        Password = "$2a$11$fzXCnjrZ3KKnm3nI1nbdm.XQjaF3x/mXUIcmWMe3r2dMjBsSuRQ7u",
         Email = "alice@heybubble.co.nz",
       },
       new User
       {
         Id = -2,
         Username = "hanauser",
-        Password = "hanatest",
+        Password = "$2a$12$kMngNi/lnbyCxnixyC7Swuq99AWEvm9YGk8M.y9uneD49W3wJqvWm",
         Email = "hana@heybubble.co.nz",
       }
     );
