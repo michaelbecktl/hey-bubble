@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Cors;
 using DotNetEnv;
 
   var builder = WebApplication.CreateBuilder(args);
@@ -12,15 +13,24 @@ using DotNetEnv;
   builder.Services.AddControllers();
   builder.Services.AddOpenApi();
 
-  if (builder.Environment.IsEnvironment("Testing"))
+if (builder.Environment.IsEnvironment("Testing"))
+{
+  builder.Services.AddDbContext<AppDbContext>(options =>
+      options.UseInMemoryDatabase("Testing"));
+}
+else
+{
+  builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(connectionString));
+  builder.Services.AddCors(options =>
   {
-    builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseInMemoryDatabase("Testing"));
-  }
-  else
-  {
-    builder.Services.AddDbContext<AppDbContext>(options =>
-      options.UseSqlServer(connectionString));
+    options.AddPolicy(name: "AllowOrigins",
+                      policy =>
+                      {
+                        policy.AllowAnyHeader()
+                              .AllowAnyMethod();
+                      });
+  });
   }
 
   var app = builder.Build();
