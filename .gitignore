@@ -82,6 +82,21 @@ backend/[Oo]bj/
 backend/[Ll]og/
 backend/[Ll]ogs/
 
+backend.tests/[Dd]ebug/
+backend.tests/[Dd]ebugPublic/
+backend.tests/[Rr]elease/
+backend.tests/[Rr]eleases/
+backend.tests/x64/
+backend.tests/x86/
+backend.tests/[Ww][Ii][Nn]32/
+backend.tests/[Aa][Rr][Mm]/
+backend.tests/[Aa][Rr][Mm]64/
+backend.tests/bld/
+backend.tests/[Bb]in/
+backend.tests/[Oo]bj/
+backend.tests/[Ll]og/
+backend.tests/[Ll]ogs/
+
 # Visual Studio 2015/2017 cache/options directory
 backend/.vs/
 backend.tests/.vs/
