@@ -1,5 +1,5 @@
-import AppButton from '@/components/AppButton'
-import { AuthContext } from '@/utils/AuthContext'
+import AppButton from '../components/AppButton'
+import { AuthContext } from '../utils/AuthContext'
 import { useContext, useState } from 'react'
 import { StyleSheet, Text, TextInput, View } from 'react-native'
 

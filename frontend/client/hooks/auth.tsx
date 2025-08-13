@@ -3,11 +3,12 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query'
-import * as API from '../api/auth'
+import * as API from '../api/user'
 
 export function useAuth() {
   return {
     loginUser: useAttemptLogin(),
+    registerUser: useRegisterUser(),
   }
 }
 
@@ -25,4 +26,8 @@ export function useAuthMutation<TData = unknown, TVariables = unknown>(
 
 export function useAttemptLogin() {
   return useAuthMutation(API.LoginUser)
+}
+
+export function useRegisterUser() {
+  return useAuthMutation(API.RegisterUser)
 }

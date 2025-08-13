@@ -1,4 +1,6 @@
+import { useAuth } from '@/client/hooks/auth'
 import AppButton from '@/components/AppButton'
+import { UserCredentials } from '@/models/models'
 import { AuthContext } from '@/utils/AuthContext'
 import { useContext, useState } from 'react'
 import { Modal, StyleSheet, Text, TextInput, View } from 'react-native'
@@ -9,12 +11,18 @@ type Props = {
 }
 
 export default function LoginPopup({ loginVisible, setModalVisible }: Props) {
+  const auth = useAuth()
   const authContext = useContext(AuthContext)
   const [username, onChangeUsername] = useState('')
   const [password, onChangePassword] = useState('')
 
-  function attemptLogin() {
-    // Replace with actual login logic
+  async function attemptLogin() {
+    const loginDetails: UserCredentials = {
+      username: username,
+      password: password,
+    }
+    const response = await auth.loginUser.mutateAsync(loginDetails)
+    console.log(response)
     setModalVisible(!loginVisible)
   }
 

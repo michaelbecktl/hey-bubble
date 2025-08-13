@@ -50,6 +50,11 @@ frontend/app-example
 ##
 ## Get latest from `dotnet new gitignore`
 
+# test files
+backend.tests/.vs/
+backend.tests/[Bb]in/
+backend.tests/[Oo]bj/
+
 # dotenv files
 backend/.env
 
@@ -82,24 +87,8 @@ backend/[Oo]bj/
 backend/[Ll]og/
 backend/[Ll]ogs/
 
-backend.tests/[Dd]ebug/
-backend.tests/[Dd]ebugPublic/
-backend.tests/[Rr]elease/
-backend.tests/[Rr]eleases/
-backend.tests/x64/
-backend.tests/x86/
-backend.tests/[Ww][Ii][Nn]32/
-backend.tests/[Aa][Rr][Mm]/
-backend.tests/[Aa][Rr][Mm]64/
-backend.tests/bld/
-backend.tests/[Bb]in/
-backend.tests/[Oo]bj/
-backend.tests/[Ll]og/
-backend.tests/[Ll]ogs/
-
 # Visual Studio 2015/2017 cache/options directory
 backend/.vs/
-backend.tests/.vs/
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #backend/wwwroot/
 
@@ -145,8 +134,6 @@ backend/*.ilk
 backend/*.meta
 backend/*.obj
 backend/*.iobj
-backend.tests/*.obj
-backend.tests/*.iobj
 backend/*.pch
 backend/*.pdb
 backend/*.ipdb
@@ -164,8 +151,8 @@ backend/*.log
 backend/*.tlog
 backend/*.vspscc
 backend/*.vssscc
-backend.tests/*.vspscc
-backend.tests/*.vssscc
+backend/*.vspscc
+backend/*.vssscc
 backend/.builds
 backend/*.pidb
 backend/*.svclog
@@ -189,8 +176,6 @@ backend/*.VC.VC.opendb
 backend/*.psess
 backend/*.vsp
 backend/*.vspx
-backend.tests/*.vsp
-backend.tests/*.vspx
 backend/*.sap
 
 # Visual Studio Trace Files
@@ -426,7 +411,6 @@ backend/ASALocalRun/
 
 # MSBuild Binary and Structured Log
 backend/*.binlog
-backend.tests/*.binlog
 
 # NVidia Nsight GPU debugger configuration file
 backend/*.nvuser

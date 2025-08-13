@@ -50,6 +50,7 @@
     "@babel/core": "^7.25.2",
     "@types/express": "^5.0.3",
     "@types/react": "~19.0.10",
+    "@types/superagent": "^8.1.9",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~9.2.0",
     "ts-node": "^10.9.2",
