@@ -11,10 +11,14 @@ public class UserController : ControllerBase
   private readonly AppDbContext _context;
   public UserController(AppDbContext context) => _context = context;
 
-    public class UserDTO
+  public class UserLogin
   {
     public int Id { get; set; }
     public required string Username { get; set; }
+  }
+  
+  public class UserDTO : UserLogin
+  {
     public required string Email { get; set; }
   }
 
@@ -25,6 +29,17 @@ public class UserController : ControllerBase
   .Select(user => new UserDTO { Id = user.Id, Username = user.Username, Email = user.Email })
   .ToListAsync();
 
+  [HttpGet("{id}")]
+  public async Task<ActionResult<UserDTO>> Get(int id)
+  {
+    var user = await _context.Users
+    .Where(user => user.Id == id)
+    .Select(user => new UserDTO { Id = user.Id, Username = user.Username, Email = user.Email })
+    .FirstOrDefaultAsync();
+    
+    if (user == null) return NotFound();
+    return user;
+  }
 
   [HttpPost]
   public async Task<IActionResult> Post(User newUser)
@@ -43,14 +58,28 @@ public class UserController : ControllerBase
 
     // Hashing new user's password before storing into database //
     newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
-    Console.WriteLine(newUser.Password);
 
-    return Ok();
-
-    // _context.Users.Add(newUser);
-    // await _context.SaveChangesAsync();
-    // return CreatedAtAction(nameof(Get), new { id = newUser.Id }, newUser);
+    _context.Users.Add(newUser);
+    await _context.SaveChangesAsync();
+    return CreatedAtAction(nameof(Get), new { id = newUser.Id }, newUser);
   }
+
+  [HttpPost("{login}")]
+  public async Task<IActionResult> Login(string login, [FromBody] string password)
+  {
+    var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+
+    var existingUser = await _context.Users
+    .FirstOrDefaultAsync(users => users.Username == login || users.Email == login);
+
+    if (existingUser == null) return Unauthorized(new { message = "Username/Email Address not found" });
+
+    bool isMatchingPassword = BCrypt.Net.BCrypt.Verify(password, existingUser.Password);
+    if (!isMatchingPassword) return Unauthorized(new { message = "Password is incorrect" });
+
+    return Ok(new { message = "Login successful", id = existingUser.Id });
+  }
+
 
   [HttpDelete("{user}")]
   public async Task<IActionResult> Delete(string user)

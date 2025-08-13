@@ -17,7 +17,7 @@ public class RegistrationTests : IClassFixture<TestingWebAppFactory<Program>>
   [Fact]
   public async Task GetListOfUsers()
   {
-    var response = await _client.GetAsync("/api/v1/user/register");
+    var response = await _client.GetAsync("/api/v1/user");
     var users = await response.Content.ReadFromJsonAsync<User[]>();
 
     // Get request should retrieve a list of users //
@@ -29,7 +29,7 @@ public class RegistrationTests : IClassFixture<TestingWebAppFactory<Program>>
   public async Task RegisteringNewUser()
   {
     var newUser = new User { Username = "jackson", Password = "testPassword", Email = "jackson@heybubble.co.nz" };
-    var response = await _client.PostAsJsonAsync("/api/v1/user/register", newUser);
+    var response = await _client.PostAsJsonAsync("/api/v1/user", newUser);
 
     // User should successfully register //
     Assert.True(response.IsSuccessStatusCode);
@@ -39,7 +39,7 @@ public class RegistrationTests : IClassFixture<TestingWebAppFactory<Program>>
   public async Task RegisteringDuplicateUser()
   {
     var newUser = new User { Username = "bob", Password = "test", Email = "bob@heybubble.co.nz" };
-    var response = await _client.PostAsJsonAsync("/api/v1/user/register", newUser);
+    var response = await _client.PostAsJsonAsync("/api/v1/user", newUser);
 
     // Post request should fail as username and email already exists in database //
     Assert.False(response.IsSuccessStatusCode);
