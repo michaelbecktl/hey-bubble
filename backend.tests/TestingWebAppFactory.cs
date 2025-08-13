@@ -32,8 +32,8 @@ public class TestingWebAppFactory<TEntryPoint> : WebApplicationFactory<Program> 
             {
               appContext.Database.EnsureCreated();
               appContext.Users.AddRange(
-              new User { Username = "alice", Email = "alice@heybubble.co.nz", Password = "test" },
-              new User { Username = "bob", Email = "bob@heybubble.co.nz", Password = "test" }
+              new User { Username = "alice", Email = "alice@heybubble.co.nz", Password = "$2a$12$AuEm75i/QjIuF3ZMcvzkCOGtorxfispojQkLnIac0pQgkS6rJ0LdK" },
+              new User { Username = "bob", Email = "bob@heybubble.co.nz", Password = "$2a$12$iaPCaJF2IW3S7TnJJqEaDe1hUp0LRVI.HYDCmG20N6xyE9sMrCjv2" }
               );
 
               appContext.SaveChanges();

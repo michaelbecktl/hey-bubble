@@ -13,12 +13,15 @@ public class UserController : ControllerBase
 
   public class UserLogin
   {
-    public int Id { get; set; }
     public required string Username { get; set; }
+
+    public required string Password { get; set; }
   }
   
-  public class UserDTO : UserLogin
+  public class UserDTO
   {
+    public int Id { get; set; }
+    public required string Username { get; set; }
     public required string Email { get; set; }
   }
 
@@ -64,17 +67,17 @@ public class UserController : ControllerBase
     return CreatedAtAction(nameof(Get), new { id = newUser.Id }, newUser);
   }
 
-  [HttpPost("{login}")]
-  public async Task<IActionResult> Login(string login, [FromBody] string password)
+  [HttpPost("login")]
+  public async Task<IActionResult> Login([FromBody] UserLogin userLogin)
   {
-    var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+    var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userLogin.Password);
 
     var existingUser = await _context.Users
-    .FirstOrDefaultAsync(users => users.Username == login || users.Email == login);
+    .FirstOrDefaultAsync(users => users.Username == userLogin.Username || users.Email == userLogin.Username);
 
     if (existingUser == null) return Unauthorized(new { message = "Username/Email Address not found" });
 
-    bool isMatchingPassword = BCrypt.Net.BCrypt.Verify(password, existingUser.Password);
+    bool isMatchingPassword = BCrypt.Net.BCrypt.Verify(userLogin.Password, existingUser.Password);
     if (!isMatchingPassword) return Unauthorized(new { message = "Password is incorrect" });
 
     return Ok(new { message = "Login successful", id = existingUser.Id });
