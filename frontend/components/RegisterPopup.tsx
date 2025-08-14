@@ -1,8 +1,7 @@
 import { useAuth } from '../client/hooks/auth'
 import AppButton from '../components/AppButton'
 import { UserCredentials } from '../models/models'
-import { AuthContext } from '../utils/AuthContext'
-import { useContext, useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Modal, StyleSheet, Text, TextInput, View } from 'react-native'
 
 type Props = {
@@ -12,7 +11,6 @@ type Props = {
 
 export default function LoginPopup({ modalVisible, setModalVisible }: Props) {
   const auth = useAuth()
-  const authContext = useContext(AuthContext)
   const [username, onChangeUsername] = useState('')
   const [email, onChangeEmail] = useState('')
   const [password, onChangePassword] = useState('')
@@ -27,7 +25,35 @@ export default function LoginPopup({ modalVisible, setModalVisible }: Props) {
     if (field === 'confirmPassword') onChangeConfirmPassword(value)
   }
 
+  // Checks for valid email
+  function isValidEmail(e: string) {
+    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(e)
+  }
+
   async function onPressRegister() {
+    // Checks for invalid information before API request
+    if (!username || username.length < 5)
+      return setErrorMessage('Username must be at least 5 characters long')
+    if (!email) return setErrorMessage('Email address required')
+    if (!isValidEmail(email)) return setErrorMessage('Invalid email address')
+    if (password !== confirmPassword)
+      return setErrorMessage('Passwords do not match')
+
+    // Password strength tester
+    if (password.length < 8 || password.length > 16)
+      return setErrorMessage('Password must be 8-16 characters long')
+    if (!/[A-Z]/.test(password))
+      return setErrorMessage('Password requires at least one uppercase letter')
+    if (!/[a-z]/.test(password))
+      return setErrorMessage('Password requires at least one lowercase letter')
+    if (!/[0-9]/.test(password))
+      return setErrorMessage('Password requires at least one number')
+    if (!/[^A-Za-z0-9]/.test(password))
+      return setErrorMessage(
+        'Password requires at least one special character (!@#$%^&* etc).'
+      )
+
+    // Sends user application details to server
     try {
       const userDetails: UserCredentials = {
         username: username,
@@ -81,9 +107,6 @@ export default function LoginPopup({ modalVisible, setModalVisible }: Props) {
             secureTextEntry={true}
           />
           <View>
-            <Text style={styles.error}>
-              {password === confirmPassword ? '' : 'Passwords do not match'}
-            </Text>
             <Text style={styles.error}>{errorMessage}</Text>
           </View>
           <View style={{ marginBottom: 10 }}>
@@ -112,13 +135,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 35,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)',
     elevation: 5,
   },
   textFieldTitle: {
@@ -136,7 +153,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   error: {
-    margin: 5,
+    marginBottom: 15,
     color: '#ff0000ff',
   },
 })

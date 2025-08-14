@@ -8,15 +8,15 @@ export async function LoginUser(userLogin: UserCredentials) {
     const response = await request.post(`${rootURL}/login`).send(userLogin)
     return response.body.id
   } catch (error: any) {
-    console.error(error)
+    throw error
   }
 }
 
 export async function RegisterUser(userDetails: UserCredentials) {
   try {
-    const response = await request.post(`${rootURL}/register`).send(userDetails)
+    const response = await request.post(`${rootURL}`).send(userDetails)
     return response.body
   } catch (error: any) {
-    console.error(error)
+    throw error
   }
 }

@@ -19,10 +19,6 @@ export default function RootLayout() {
             name="login"
             options={{ headerShown: false, animation: 'none' }}
           />
-          <Stack.Screen
-            name="register"
-            options={{ headerShown: false, animation: 'none' }}
-          />
         </Stack>
       </QueryClientProvider>
     </AuthProvider>

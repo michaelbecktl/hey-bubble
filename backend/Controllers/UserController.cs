@@ -48,6 +48,7 @@ public class UserController : ControllerBase
   public async Task<IActionResult> Post(User newUser)
   {
     // Checks if database already has an existing user with the same details as new user's registration //
+    Console.WriteLine(newUser);
     var existingUser = await _context.Users
       .Where(users => users.Username == newUser.Username || users.Email == newUser.Email)
       .Select(user => new { user.Username, user.Email })
