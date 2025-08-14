@@ -27,7 +27,8 @@ else
     options.AddPolicy(name: "AllowOrigins",
                       policy =>
                       {
-                        policy.AllowAnyHeader()
+                        policy.AllowAnyOrigin()
+                              .AllowAnyHeader()
                               .AllowAnyMethod();
                       });
   });
@@ -35,13 +36,17 @@ else
 
   var app = builder.Build();
 
-  // Configure the HTTP request pipeline.
-  if (app.Environment.IsDevelopment())
-  {
-      app.UseDeveloperExceptionPage();
-      app.MapOpenApi();
-  }
+  app.UseCors("AllowOrigins");
 
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+  app.UseDeveloperExceptionPage();
+  app.MapOpenApi();
+}
+
+
+  app.UseCors("AllowOrigins");
   app.MapControllers();
   app.Run();  
   public partial class Program { }

@@ -1,3 +1,4 @@
+import RegisterPopup from '@/components/RegisterPopup'
 import AppButton from '../components/AppButton'
 import LoginPopup from '../components/LoginPopup'
 import { AuthContext } from '../utils/AuthContext'
@@ -6,20 +7,8 @@ import { useContext, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 export default function LoginScreen() {
-  const router = useRouter()
-  const authContext = useContext(AuthContext)
-
   const [loginVisible, setLoginVisible] = useState<boolean>(false)
-
-  const redirectToRegister = () => {
-    router.push('/register')
-  }
-
-  // To be used for graying out main menu while popup is active
-  // function isPopupVisible() {
-  //   if (loginVisible) return true
-  //   else return false
-  // }
+  const [registerVisible, setRegisterVisible] = useState<boolean>(false)
 
   return (
     <>
@@ -28,15 +17,23 @@ export default function LoginScreen() {
         <View style={{ marginBottom: 10 }}>
           <AppButton
             label="Login"
-            onPress={() => setLoginVisible(true)} // Replace with actual login logic
+            onPress={() => setLoginVisible(true)} // Turns Login Popup Modal visible
             size="large"
           />
         </View>
-        <AppButton label="Register" onPress={redirectToRegister} size="large" />
+        <AppButton
+          label="Register"
+          onPress={() => setRegisterVisible(true)}
+          size="large"
+        />
       </View>
       <LoginPopup
-        loginVisible={loginVisible}
+        modalVisible={loginVisible}
         setModalVisible={setLoginVisible}
+      />
+      <RegisterPopup
+        modalVisible={registerVisible}
+        setModalVisible={setRegisterVisible}
       />
     </>
   )

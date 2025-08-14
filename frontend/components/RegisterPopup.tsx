@@ -2,7 +2,7 @@ import { useAuth } from '../client/hooks/auth'
 import AppButton from '../components/AppButton'
 import { UserCredentials } from '../models/models'
 import { AuthContext } from '../utils/AuthContext'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Modal, StyleSheet, Text, TextInput, View } from 'react-native'
 
 type Props = {
@@ -14,24 +14,34 @@ export default function LoginPopup({ modalVisible, setModalVisible }: Props) {
   const auth = useAuth()
   const authContext = useContext(AuthContext)
   const [username, onChangeUsername] = useState('')
+  const [email, onChangeEmail] = useState('')
   const [password, onChangePassword] = useState('')
+  const [confirmPassword, onChangeConfirmPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
-  async function onPressLogin() {
+  function handlePassword(
+    value: string,
+    field: 'password' | 'confirmPassword'
+  ) {
+    if (field === 'password') onChangePassword(value)
+    if (field === 'confirmPassword') onChangeConfirmPassword(value)
+  }
+
+  async function onPressRegister() {
     try {
-      const loginDetails: UserCredentials = {
+      const userDetails: UserCredentials = {
         username: username,
+        email: email,
         password: password,
       }
-      const id = await auth.loginUser.mutateAsync(loginDetails)
 
-      // Login should return Id after successful login
+      const id = await auth.registerUser.mutateAsync(userDetails)
+
       setModalVisible(!modalVisible)
-      authContext.logIn(id)
+      alert("Yay! You've successfully registered, please try logging in!")
+      return id
     } catch (error: any) {
-      const loginError = error?.response?.body.message ?? 'Failed to login'
-      setErrorMessage(loginError)
-      alert(loginError)
+      setErrorMessage(error?.response?.body.message)
     }
   }
 
@@ -44,24 +54,44 @@ export default function LoginPopup({ modalVisible, setModalVisible }: Props) {
     >
       <View style={styles.container}>
         <View style={styles.modalView}>
-          <Text style={styles.textFieldTitle}>Username or email address</Text>
+          <Text style={styles.textFieldTitle}>Username</Text>
           <TextInput
             value={username}
             onChangeText={onChangeUsername}
             style={styles.textField}
           />
+          <Text style={styles.textFieldTitle}>Email Address</Text>
+          <TextInput
+            value={email}
+            onChangeText={onChangeEmail}
+            style={styles.textField}
+          />
           <Text style={styles.textFieldTitle}>Password</Text>
           <TextInput
             value={password}
-            onChangeText={onChangePassword}
+            onChangeText={(value) => handlePassword(value, 'password')}
+            style={styles.textField}
+            secureTextEntry={true}
+          />
+          <Text style={styles.textFieldTitle}>Confirm Password</Text>
+          <TextInput
+            value={confirmPassword}
+            onChangeText={(value) => handlePassword(value, 'confirmPassword')}
             style={styles.textField}
             secureTextEntry={true}
           />
           <View>
+            <Text style={styles.error}>
+              {password === confirmPassword ? '' : 'Passwords do not match'}
+            </Text>
             <Text style={styles.error}>{errorMessage}</Text>
           </View>
           <View style={{ marginBottom: 10 }}>
-            <AppButton label="Login" onPress={onPressLogin} size="large" />
+            <AppButton
+              label="Register"
+              onPress={onPressRegister}
+              size="large"
+            />
           </View>
         </View>
       </View>
