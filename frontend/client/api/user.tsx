@@ -1,7 +1,7 @@
 import { UserCredentials } from '../../models/models'
 import request from 'superagent'
 
-const rootURL = new URL(`http://localhost:5218/api/v1/user`)
+const rootURL = new URL(`http://192.168.50.59:5218/api/v1/user`)
 
 export async function LoginUser(userLogin: UserCredentials) {
   try {

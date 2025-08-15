@@ -7,10 +7,11 @@ using DotNetEnv;
   Env.Load();
 
   var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+var mobileAppUrl = Environment.GetEnvironmentVariable("MOBILE_APP_URL");
 
   // Add services to the container.
-  // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-  builder.Services.AddControllers();
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddControllers();
   builder.Services.AddOpenApi();
 
 if (builder.Environment.IsEnvironment("Testing"))
@@ -22,6 +23,7 @@ else
 {
   builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
+  builder.WebHost.UseUrls(mobileAppUrl ?? "https://localhost:7031;http://localhost:5218"); // !! REMOVE THIS IF PHYSICAL MOBILE TESTING NOT REQUIRED !! //
   builder.Services.AddCors(options =>
   {
     options.AddPolicy(name: "AllowOrigins",
