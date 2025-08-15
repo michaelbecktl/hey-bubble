@@ -71,6 +71,7 @@ export default function LoginPopup({
 
       const id = await auth.registerUser.mutateAsync(userDetails)
 
+      setErrorMessage('')
       setModalVisible(!modalVisible)
       setSuccessPopupVisible(true)
 
