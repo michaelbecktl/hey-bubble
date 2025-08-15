@@ -1,14 +1,20 @@
 import RegisterPopup from '@/components/RegisterPopup'
 import AppButton from '../components/AppButton'
 import LoginPopup from '../components/LoginPopup'
-import { AuthContext } from '../utils/AuthContext'
-import { useRouter } from 'expo-router'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import RegisterSuccessfully from '@/components/RegisterSuccessfully'
 
 export default function LoginScreen() {
   const [loginVisible, setLoginVisible] = useState<boolean>(false)
   const [registerVisible, setRegisterVisible] = useState<boolean>(false)
+  const [successPopupVisible, setSuccessPopupVisible] = useState(false)
+
+  // Closes registration, success confirmation message and sends user to login screen//
+  function proceedToLogin() {
+    setSuccessPopupVisible(false)
+    setLoginVisible(true)
+  }
 
   return (
     <>
@@ -34,6 +40,12 @@ export default function LoginScreen() {
       <RegisterPopup
         modalVisible={registerVisible}
         setModalVisible={setRegisterVisible}
+        setSuccessPopupVisible={setSuccessPopupVisible}
+      />
+      <RegisterSuccessfully
+        modalVisible={successPopupVisible}
+        setModalVisible={setSuccessPopupVisible}
+        proceedToLogin={proceedToLogin}
       />
     </>
   )

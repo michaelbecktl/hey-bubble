@@ -8,10 +8,17 @@ import ExitButton from './ExitButton'
 type Props = {
   modalVisible: boolean
   setModalVisible: (modalVisible: boolean) => void
+  setSuccessPopupVisible: (successPopupVisible: boolean) => void
 }
 
-export default function LoginPopup({ modalVisible, setModalVisible }: Props) {
+export default function LoginPopup({
+  modalVisible,
+  setModalVisible,
+  setSuccessPopupVisible,
+}: Props) {
   const auth = useAuth()
+
+  // Form States //
   const [username, onChangeUsername] = useState('')
   const [email, onChangeEmail] = useState('')
   const [password, onChangePassword] = useState('')
@@ -65,7 +72,8 @@ export default function LoginPopup({ modalVisible, setModalVisible }: Props) {
       const id = await auth.registerUser.mutateAsync(userDetails)
 
       setModalVisible(!modalVisible)
-      alert("Yay! You've successfully registered, please try logging in!")
+      setSuccessPopupVisible(true)
+
       return id
     } catch (error: any) {
       setErrorMessage(error?.response?.body.message)
