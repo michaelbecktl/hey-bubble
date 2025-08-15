@@ -4,6 +4,7 @@ import { UserCredentials } from '../models/models'
 import { AuthContext } from '../utils/AuthContext'
 import { useContext, useState } from 'react'
 import { Modal, StyleSheet, Text, TextInput, View } from 'react-native'
+import ExitButton from './ExitButton'
 
 type Props = {
   modalVisible: boolean
@@ -37,32 +38,38 @@ export default function LoginPopup({ modalVisible, setModalVisible }: Props) {
 
   return (
     <Modal
-      animationType="fade"
+      animationType="slide"
       transparent={true}
       visible={modalVisible}
       onRequestClose={() => setModalVisible(!modalVisible)}
     >
       <View style={styles.container}>
-        <View style={styles.modalView}>
-          <Text style={styles.textFieldTitle}>Username or email address</Text>
-          <TextInput
-            value={username}
-            onChangeText={onChangeUsername}
-            style={styles.textField}
-          />
-          <Text style={styles.textFieldTitle}>Password</Text>
-          <TextInput
-            value={password}
-            onChangeText={onChangePassword}
-            style={styles.textField}
-            secureTextEntry={true}
-          />
-          <View>
-            <Text style={styles.error}>{errorMessage}</Text>
+        <View>
+          <View style={styles.modalView}>
+            <Text style={styles.textFieldTitle}>Username or email address</Text>
+            <TextInput
+              value={username}
+              onChangeText={onChangeUsername}
+              style={styles.textField}
+            />
+            <Text style={styles.textFieldTitle}>Password</Text>
+            <TextInput
+              value={password}
+              onChangeText={onChangePassword}
+              style={styles.textField}
+              secureTextEntry={true}
+            />
+            <View>
+              <Text style={styles.error}>{errorMessage}</Text>
+            </View>
+            <View style={{ marginBottom: 10 }}>
+              <AppButton label="Login" onPress={onPressLogin} size="large" />
+            </View>
           </View>
-          <View style={{ marginBottom: 10 }}>
-            <AppButton label="Login" onPress={onPressLogin} size="large" />
-          </View>
+          <ExitButton
+            position="topRight"
+            onPress={() => setModalVisible(!modalVisible)}
+          />
         </View>
       </View>
     </Modal>
