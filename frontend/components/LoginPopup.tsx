@@ -4,7 +4,7 @@ import { UserCredentials } from '../models/models'
 import { AuthContext } from '../utils/AuthContext'
 import { useContext, useState } from 'react'
 import { Modal, StyleSheet, Text, TextInput, View } from 'react-native'
-import ExitButton from './ExitButton'
+import BadgeButton from './BadgeButton'
 
 type Props = {
   modalVisible: boolean
@@ -66,8 +66,9 @@ export default function LoginPopup({ modalVisible, setModalVisible }: Props) {
               <AppButton label="Login" onPress={onPressLogin} size="large" />
             </View>
           </View>
-          <ExitButton
+          <BadgeButton
             position="topRight"
+            type="x"
             onPress={() => setModalVisible(!modalVisible)}
           />
         </View>
