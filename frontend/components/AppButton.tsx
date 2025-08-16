@@ -8,23 +8,27 @@ type Props = {
 }
 
 export default function AppButton({ label, size, theme, onPress }: Props) {
-  if (size === 'large') {
-    return (
-      <View>
-        <Pressable
-          onPress={onPress}
-          style={[styles.button, { width: 200, height: 64, padding: 16 }]}
-        >
-          <Text style={[styles.text, { fontSize: 24 }]}>{label}</Text>
-        </Pressable>
-      </View>
-    )
-  }
-
   return (
     <View>
-      <Pressable onPress={onPress} style={styles.button}>
-        <Text style={styles.text}>{label}</Text>
+      <Pressable
+        onPress={onPress}
+        style={({ pressed }) => [
+          styles.button,
+          size === 'large' && styles.largeButton,
+          pressed && styles.activeButton,
+        ]}
+      >
+        {({ pressed }) => (
+          <Text
+            style={[
+              styles.text,
+              size === 'large' && styles.largeText,
+              pressed && styles.activeText,
+            ]}
+          >
+            {label}
+          </Text>
+        )}
       </Pressable>
     </View>
   )
@@ -40,9 +44,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#DA627D',
   },
+  largeButton: { width: 200, height: 64, padding: 16 },
   text: {
-    color: 'white',
+    color: '#FCF7FA',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  largeText: {
+    fontSize: 24,
+  },
+  activeButton: {
+    backgroundColor: '#D44976',
+  },
+  activeText: {
+    color: '#F9F0F6',
   },
 })

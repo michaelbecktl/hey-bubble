@@ -1,6 +1,6 @@
 import { Modal, View, Text, StyleSheet } from 'react-native'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
-import ExitButton from './ExitButton'
+import BadgeButton from './BadgeButton'
 
 type Props = {
   modalVisible: boolean
@@ -31,7 +31,7 @@ function RegisterSuccessfully({
             <Text>Registration Successful!</Text>
             <Text>Please proceed to login screen</Text>
           </View>
-          <ExitButton onPress={proceedToLogin} position="topRight" />
+          <BadgeButton onPress={proceedToLogin} type="x" position="topRight" />
         </View>
       </View>
     </Modal>

@@ -2,15 +2,32 @@ import { Pressable, StyleSheet, View } from 'react-native'
 import Feather from '@expo/vector-icons/Feather'
 
 type Props = {
-  position: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'
+  position?: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'
+  type?: 'x' | 'plus' | 'send' | 'phone' | 'search'
   onPress: () => void
 }
 
-export default function ExitButton({ position, onPress }: Props) {
+export default function ExitButton({
+  position = 'topLeft',
+  type = 'x',
+  onPress,
+}: Props) {
+  const iconColor = '#DB6B85',
+    activeIconColor = '#D44976'
+
   return (
     <View style={[styles.container, styles[position]]}>
-      <Pressable onPress={onPress} style={styles.button}>
-        <Feather name="x" size={24} color="#DB6B85" />
+      <Pressable
+        onPress={onPress}
+        style={({ pressed }) => [styles.button, pressed && styles.activeButton]}
+      >
+        {(pressed) => (
+          <Feather
+            name={type}
+            size={24}
+            color={pressed ? activeIconColor : iconColor}
+          />
+        )}
       </Pressable>
     </View>
   )
@@ -19,6 +36,8 @@ export default function ExitButton({ position, onPress }: Props) {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   button: {
     borderRadius: '50%',
@@ -26,6 +45,10 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     padding: 5,
     backgroundColor: '#F7DEE4',
+  },
+  activeButton: {
+    borderColor: '#D44976',
+    backgroundColor: '#F3CDD6',
   },
   text: {
     color: 'white',
