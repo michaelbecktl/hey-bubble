@@ -24,7 +24,7 @@ namespace backend.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Backend.Models.User", b =>
+            modelBuilder.Entity("Backend.Entity.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -74,7 +74,7 @@ namespace backend.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Backend.Models.UserProfile", b =>
+            modelBuilder.Entity("Backend.Entity.UserProfile", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()

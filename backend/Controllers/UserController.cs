@@ -1,28 +1,30 @@
-using Backend.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Backend.Entity;
 using BCrypt.Net;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 [ApiController]
 [Route("api/v1/user")]
 public class UserController : ControllerBase
 {
   private readonly AppDbContext _context;
-  public UserController(AppDbContext context) => _context = context;
+  private readonly IConfiguration _configuration;
+  public UserController(AppDbContext context, IConfiguration configuration)
+  {
+    _context = context;
+    _configuration = configuration;
+  }
 
   public class UserLogin
   {
     public required string Username { get; set; }
 
     public required string Password { get; set; }
-  }
-  
-  public class UserDTO
-  {
-    public int Id { get; set; }
-    public required string Username { get; set; }
-    public required string Email { get; set; }
   }
 
   [HttpGet]
@@ -39,11 +41,13 @@ public class UserController : ControllerBase
     .Where(user => user.Id == id)
     .Select(user => new UserDTO { Id = user.Id, Username = user.Username, Email = user.Email })
     .FirstOrDefaultAsync();
-    
+
     if (user == null) return NotFound();
     return user;
   }
 
+
+  // User Registration
   [HttpPost]
   public async Task<IActionResult> Post(User newUser)
   {
@@ -74,14 +78,40 @@ public class UserController : ControllerBase
     var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userLogin.Password);
 
     var existingUser = await _context.Users
-    .FirstOrDefaultAsync(users => users.Username == userLogin.Username || users.Email == userLogin.Username);
+    .FirstOrDefaultAsync(users => users.Username == userLogin.Username);
 
-    if (existingUser == null) return Unauthorized(new { message = "Username/Email Address not found" });
+    if (existingUser == null) return Unauthorized(new { message = "Invalid username and password" });
 
     bool isMatchingPassword = BCrypt.Net.BCrypt.Verify(userLogin.Password, existingUser.Password);
-    if (!isMatchingPassword) return Unauthorized(new { message = "Password is incorrect" });
+    if (!isMatchingPassword) return Unauthorized(new { message = "Invalid username and password" });
 
-    return Ok(new { message = "Login successful", id = existingUser.Id });
+    string token = CreateToken(userLogin);
+
+    return Ok(token);
+
+  }
+
+  private string CreateToken(UserLogin user)
+  {
+    var claims = new List<Claim>
+    {
+      new Claim(ClaimTypes.Name, user.Username)
+    };
+
+    var key = new SymmetricSecurityKey(
+      Encoding.UTF8.GetBytes(_configuration.GetValue<string>("AppSettings:Token")!));
+
+    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
+
+    var tokenDescriptor = new JwtSecurityToken(
+      issuer: _configuration.GetValue<string>("AppSettings:Issuer"),
+      audience: _configuration.GetValue<string>("AppSettings:Audience"),
+      claims: claims,
+      expires: DateTime.UtcNow.AddMinutes(15),
+      signingCredentials: creds
+    );
+
+    return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
   }
 
 
@@ -109,4 +139,5 @@ public class UserController : ControllerBase
     }
 
   }
+
 }
