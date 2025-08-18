@@ -1,7 +1,8 @@
 import { Post, UserProfile } from '@/models/models'
-import { View } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import AppText from './AppText'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
+import ProfilePhoto from './ProfilePhoto'
 
 type Props = {
   postId: number
@@ -34,9 +35,11 @@ function UserPost({ postId }: Props) {
   const commentCount = '10'
 
   return (
-    <View>
+    <View style={styles.container}>
       <View>
-        <View>{/* To be replaced with Profile Photo URL */}</View>
+        <View>
+          <ProfilePhoto source={userProfile.profilePhoto} type="post" />
+        </View>
         <View>
           <View>
             <AppText text={userProfile.displayName} type="basic" />
@@ -63,5 +66,14 @@ function UserPost({ postId }: Props) {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#fcf7fa',
+    marginBottom: 1,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+  },
+})
 
 export default UserPost
