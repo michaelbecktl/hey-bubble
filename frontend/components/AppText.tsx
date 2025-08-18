@@ -2,7 +2,7 @@ import { Text, StyleSheet } from 'react-native'
 
 type Props = {
   text: string
-  type: 'post' | 'sub'
+  type: 'basic' | 'sub'
 }
 
 function AppText({ text, type }: Props) {
@@ -10,7 +10,7 @@ function AppText({ text, type }: Props) {
 }
 
 const styles = StyleSheet.create({
-  post: {
+  basic: {
     color: '#0D0628',
   },
   sub: {

@@ -1,10 +1,10 @@
-import { useAuth } from '../client/hooks/auth'
-import AppButton from '../components/AppButton'
-import { UserCredentials } from '../models/models'
-import { AuthContext } from '../utils/AuthContext'
+import { useAuth } from '@/client/hooks/auth'
+import AppButton from '@/components/AppButton'
+import { UserCredentials } from '@/models/models'
+import { AuthContext } from '@/utils/AuthContext'
 import { useContext, useState } from 'react'
 import { Modal, StyleSheet, Text, TextInput, View } from 'react-native'
-import BadgeButton from './BadgeButton'
+import BadgeButton from '@/components/BadgeButton'
 
 type Props = {
   modalVisible: boolean

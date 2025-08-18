@@ -12,7 +12,7 @@ export interface UserProfile {
   userId: number
   displayName: string
   dob: string
-  profilePhoto?: string
+  profilePhoto?: string | null
   gender: string
   country: string
   nativeLanguage: string
@@ -23,7 +23,7 @@ export interface Post {
   userId: number
   content: string
   createdAt: string
-  updatedAt: string
-  mediaUrl: string
-  mediaType: string
+  updatedAt?: string | null
+  mediaUrl?: string | null
+  mediaType?: string | null
 }

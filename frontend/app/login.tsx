@@ -1,9 +1,9 @@
-import RegisterPopup from '@/components/RegisterPopup'
+import RegisterPopup from '@/components/auth-components/RegisterPopup'
 import AppButton from '../components/AppButton'
-import LoginPopup from '../components/LoginPopup'
+import LoginPopup from '../components/auth-components/LoginPopup'
 import { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import RegisterSuccessfully from '@/components/RegisterSuccessfully'
+import RegisterSuccessfully from '@/components/auth-components/RegisterSuccessfully'
 
 export default function LoginScreen() {
   const [loginVisible, setLoginVisible] = useState<boolean>(false)
