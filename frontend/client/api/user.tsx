@@ -6,7 +6,7 @@ const rootURL = new URL(`http://192.168.50.59:5218/api/v1/user`)
 export async function LoginUser(userLogin: UserCredentials) {
   try {
     const response = await request.post(`${rootURL}/login`).send(userLogin)
-    return response.body.id
+    return response.text
   } catch (error: any) {
     throw error
   }
