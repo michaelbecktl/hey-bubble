@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Cors;
 using DotNetEnv;
+using Backend.Services;
 
-  var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
   Env.Load();
 
@@ -23,6 +24,8 @@ else
 {
   builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+  builder.Services.AddScoped<IUserService, UserService>();
   builder.WebHost.UseUrls(mobileAppUrl ?? "https://localhost:7031;http://localhost:5218"); // !! REMOVE THIS IF PHYSICAL MOBILE TESTING NOT REQUIRED !! //
   builder.Services.AddCors(options =>
   {
