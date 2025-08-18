@@ -7,8 +7,8 @@ SplashScreen.preventAutoHideAsync()
 type AuthState = {
   isReady: boolean
   isLoggedIn: boolean
-  userId: number | null
-  logIn: (id: number) => void
+  token: string | null
+  logIn: (t: string) => void
   logOut: () => void
 }
 
@@ -17,20 +17,20 @@ const authStorageKey = 'auth-key'
 export const AuthContext = createContext<AuthState>({
   isReady: false,
   isLoggedIn: false,
-  userId: null,
-  logIn: (id: number) => {},
+  token: null,
+  logIn: (t: string) => {},
   logOut: () => {},
 })
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [isReady, setIsReady] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [userId, setUserId] = useState<number | null>(null)
+  const [token, setToken] = useState<string | null>(null)
   const router = useRouter()
 
   const storeAuthState = async (newState: {
     isLoggedIn: boolean
-    userId: number | null
+    token: string | null
   }) => {
     try {
       const jsonValue = JSON.stringify(newState)
@@ -41,22 +41,22 @@ export function AuthProvider({ children }: PropsWithChildren) {
   }
 
   // Takes user ID from API request after successful login to store for retrieving user relevant data post login
-  const logIn = (id: number) => {
+  const logIn = (t: string) => {
     setIsLoggedIn(true)
-    setUserId(id)
+    setToken(t)
 
     // Saves login history to remember use if app has been closed and reopened
-    storeAuthState({ isLoggedIn: true, userId: userId })
+    storeAuthState({ isLoggedIn: true, token: token })
     router.replace('/')
   }
 
   // Removes user ID from context and takes the user back to login page
   const logOut = () => {
     setIsLoggedIn(false)
-    setUserId(null)
+    setToken(null)
 
     // Saves logout history to remember use if app has been closed and reopened
-    storeAuthState({ isLoggedIn: false, userId: userId })
+    storeAuthState({ isLoggedIn: false, token: token })
     router.replace('/login')
   }
 
@@ -88,7 +88,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
       value={{
         isReady,
         isLoggedIn,
-        userId,
+        token,
         logIn,
         logOut,
       }}

@@ -8,15 +8,16 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-  Env.Load();
+Env.Load();
 
-  var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
 var mobileAppUrl = Environment.GetEnvironmentVariable("MOBILE_APP_URL");
 
-  // Add services to the container.
+// Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
 builder.Services.AddControllers();
-  builder.Services.AddOpenApi();
+builder.Services.AddOpenApi();
 
 if (builder.Environment.IsEnvironment("Testing"))
 {

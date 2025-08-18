@@ -69,13 +69,13 @@ export default function LoginPopup({
         password: password,
       }
 
-      const id = await auth.registerUser.mutateAsync(userDetails)
+      const user = await auth.registerUser.mutateAsync(userDetails)
 
       setErrorMessage('')
       setModalVisible(!modalVisible)
       setSuccessPopupVisible(true)
 
-      return id
+      return user
     } catch (error: any) {
       setErrorMessage(error?.response?.body.message)
     }

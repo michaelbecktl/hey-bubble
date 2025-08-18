@@ -24,11 +24,12 @@ export default function LoginPopup({ modalVisible, setModalVisible }: Props) {
         username: username,
         password: password,
       }
-      const id = await auth.loginUser.mutateAsync(loginDetails)
+      const token = await auth.loginUser.mutateAsync(loginDetails)
 
-      // Login should return Id after successful login
+      // Login should store JWT Token after successful login
+
+      authContext.logIn(token)
       setModalVisible(!modalVisible)
-      authContext.logIn(id)
     } catch (error: any) {
       const loginError = error?.response?.body.message ?? 'Failed to login'
       setErrorMessage(loginError)

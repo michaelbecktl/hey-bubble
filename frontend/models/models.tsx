@@ -3,3 +3,7 @@ export interface UserCredentials {
   password: string
   email?: string
 }
+
+export interface User extends UserCredentials {
+  id: number
+}
