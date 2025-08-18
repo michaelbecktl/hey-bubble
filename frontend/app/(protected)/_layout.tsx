@@ -9,7 +9,7 @@ export default function ProtectedLayout() {
     return null
   }
 
-  if (!authState.isLoggedIn) {
+  if (!authState.isLoggedIn || !authState.token) {
     return <Redirect href="/login" />
   }
 
