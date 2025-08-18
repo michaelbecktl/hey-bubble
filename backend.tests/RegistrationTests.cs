@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net.Http.Json;
-using Backend.Models;
+using Backend.Entity;
 using Microsoft.Identity.Client;
 using Xunit.Abstractions;
 using Microsoft.AspNetCore.Identity;

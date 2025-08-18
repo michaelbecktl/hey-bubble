@@ -1,6 +1,6 @@
-using Backend.Models;
-using BCrypt.Net;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Backend.Entity;
+using Backend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,7 +9,12 @@ using Microsoft.EntityFrameworkCore;
 public class UserController : ControllerBase
 {
   private readonly AppDbContext _context;
-  public UserController(AppDbContext context) => _context = context;
+  private readonly IUserService _userService;
+  public UserController(AppDbContext context, IUserService userService)
+  {
+    _context = context;
+    _userService = userService;
+  }
 
   public class UserLogin
   {
@@ -17,14 +22,8 @@ public class UserController : ControllerBase
 
     public required string Password { get; set; }
   }
-  
-  public class UserDTO
-  {
-    public int Id { get; set; }
-    public required string Username { get; set; }
-    public required string Email { get; set; }
-  }
 
+  [Authorize]
   [HttpGet]
 
   public async Task<IEnumerable<UserDTO>> Get() =>
@@ -39,52 +38,39 @@ public class UserController : ControllerBase
     .Where(user => user.Id == id)
     .Select(user => new UserDTO { Id = user.Id, Username = user.Username, Email = user.Email })
     .FirstOrDefaultAsync();
-    
+
     if (user == null) return NotFound();
     return user;
   }
 
+
+  // User Registration
   [HttpPost]
   public async Task<IActionResult> Post(User newUser)
   {
-    // Checks if database already has an existing user with the same details as new user's registration //
-    Console.WriteLine(newUser);
-    var existingUser = await _context.Users
-      .Where(users => users.Username == newUser.Username || users.Email == newUser.Email)
-      .Select(user => new { user.Username, user.Email })
-      .FirstOrDefaultAsync();
+    var user = await _userService.RegisterAsync(newUser);
+    if (user is null)
+      return Conflict("Username or email already exists");
 
-    if (existingUser != null)
-    {
-      if (existingUser.Username == newUser.Username) return Conflict(new { message = "Username already exists" });
-      if (existingUser.Email == newUser.Email) return Conflict(new { message = "Email already exists" });
-    }
-
-    // Hashing new user's password before storing into database //
-    newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
-
-    _context.Users.Add(newUser);
-    await _context.SaveChangesAsync();
-    return CreatedAtAction(nameof(Get), new { id = newUser.Id }, newUser);
+    return CreatedAtAction(nameof(Get), newUser);
   }
 
   [HttpPost("login")]
   public async Task<IActionResult> Login([FromBody] UserLogin userLogin)
   {
-    var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userLogin.Password);
+    var token = await _userService.LoginAsync(userLogin);
+    if (User is null)
+      return Unauthorized("Invalid username and password");
 
-    var existingUser = await _context.Users
-    .FirstOrDefaultAsync(users => users.Username == userLogin.Username || users.Email == userLogin.Username);
-
-    if (existingUser == null) return Unauthorized(new { message = "Username/Email Address not found" });
-
-    bool isMatchingPassword = BCrypt.Net.BCrypt.Verify(userLogin.Password, existingUser.Password);
-    if (!isMatchingPassword) return Unauthorized(new { message = "Password is incorrect" });
-
-    return Ok(new { message = "Login successful", id = existingUser.Id });
+    return Ok(token);
   }
 
+  public IActionResult AuthenticatedOnlyEndpoint()
+  {
+    return Ok("You are authenticated!");
+  }
 
+  [Authorize]
   [HttpDelete("{user}")]
   public async Task<IActionResult> Delete(string user)
   {
@@ -109,4 +95,5 @@ public class UserController : ControllerBase
     }
 
   }
+
 }
