@@ -1,5 +1,6 @@
 using Backend.Entity;
 using Backend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +23,7 @@ public class UserController : ControllerBase
     public required string Password { get; set; }
   }
 
+  [Authorize]
   [HttpGet]
 
   public async Task<IEnumerable<UserDTO>> Get() =>
@@ -68,7 +70,7 @@ public class UserController : ControllerBase
     return Ok("You are authenticated!");
   }
 
-
+  [Authorize]
   [HttpDelete("{user}")]
   public async Task<IActionResult> Delete(string user)
   {
