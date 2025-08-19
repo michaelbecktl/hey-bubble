@@ -14,8 +14,8 @@ function ProfilePhoto({ source, type }: Props) {
 
 const styles = StyleSheet.create({
   post: {
-    width: 30,
-    height: 30,
+    width: 32,
+    height: 32,
     borderRadius: '50%',
   },
 })
