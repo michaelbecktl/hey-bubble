@@ -8,6 +8,9 @@ public class AppDbContext : DbContext
   public DbSet<User> Users { get; set; }
   public DbSet<UserProfile> UserProfiles { get; set; }
 
+  public DbSet<Post> Posts { get; set; }
+  public DbSet<Comment> Comments { get; set; }
+
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     modelBuilder.Entity<User>().HasData(
@@ -34,6 +37,11 @@ public class AppDbContext : DbContext
       }
     );
 
+    modelBuilder.Entity<UserProfile>()
+    .HasOne(up => up.User)
+    .WithOne(u => u.UserProfile)
+    .HasForeignKey<UserProfile>(up => up.UserId);
+
     modelBuilder.Entity<UserProfile>().HasData(
       new UserProfile
       {
@@ -45,6 +53,8 @@ public class AppDbContext : DbContext
         Country = "NZ",
         NativeLanguage = "EN",
         LearningLanguage = "JP",
+        Following = 1,
+        Followers = 1,
       },
       new UserProfile
       {
@@ -56,6 +66,8 @@ public class AppDbContext : DbContext
         Country = "NZ",
         NativeLanguage = "EN",
         LearningLanguage = "JP",
+        Following = 0,
+        Followers = 1,
       },
       new UserProfile
       {
@@ -67,8 +79,67 @@ public class AppDbContext : DbContext
         Country = "NZ",
         NativeLanguage = "JP",
         LearningLanguage = "EN",
+        Following = 2,
+        Followers = 1,
       }
       );
+
+    var postSeed = new[]
+    {
+      new Post
+      {
+        PostId = 1,
+        UserId = -1,
+        Content = "Hi everyone! Welcome to Bubble!",
+        CreatedAt = new DateTime(2025, 8, 20, 9, 56, 0),
+        UpdatedAt = null
+      },
+      new Post
+      {
+        PostId = 2,
+        UserId = -3,
+        Content = "Ohayo everyone! Nice to meet you!",
+        CreatedAt = new DateTime(2025, 8, 20, 10, 12, 0),
+        UpdatedAt = null
+      },
+    };
+
+    modelBuilder.Entity<Post>()
+    .HasOne(p => p.User)
+    .WithMany(u => u.Posts)
+    .HasForeignKey(p => p.UserId);
+
+    modelBuilder.Entity<Post>().HasData(postSeed);
+
+    var commentSeeds = new[]
+    {
+      new Comment
+      {
+        PostId = 1,
+        CommentId = 1,
+        UserId = -3,
+        Content = "Hi!",
+        CreatedAt = new DateTime (2025, 8, 20, 10, 9, 0)
+      },
+      new Comment
+      {
+        PostId = 1,
+        CommentId = 1,
+        UserId = -2,
+        Content = "Hey there!",
+        CreatedAt = new DateTime (2025, 8, 20, 10, 16, 0)
+      }
+    };
+
+    modelBuilder.Entity<Comment>()
+    .HasOne(c => c.Post)
+    .WithMany(p => p.Comments)
+    .HasForeignKey(c => c.PostId);
+
+    modelBuilder.Entity<Comment>()
+    .HasOne(c => c.User)
+    .WithMany(u => u.Comments)
+    .HasForeignKey(c => c.UserId);
   }
 
 }
