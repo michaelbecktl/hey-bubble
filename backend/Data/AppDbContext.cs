@@ -11,6 +11,10 @@ public class AppDbContext : DbContext
   public DbSet<Post> Posts { get; set; }
   public DbSet<Comment> Comments { get; set; }
 
+  public DbSet<PostLike> PostLikes { get; set; }
+
+  public DbSet<CommentLike> CommentLikes { get; set; }
+
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     modelBuilder.Entity<User>().HasData(
@@ -147,6 +151,12 @@ public class AppDbContext : DbContext
     modelBuilder.Entity<Comment>().HasData(commentSeeds);
 
     modelBuilder.Entity<PostLike>()
+    .HasKey(pl => new { pl.PostId, pl.UserId });
+
+    modelBuilder.Entity<CommentLike>()
+    .HasKey(cl => new { cl.CommentId, cl.UserId });
+
+    modelBuilder.Entity<PostLike>()
     .HasOne(pl => pl.User)
     .WithMany(u => u.PostLikes)
     .HasForeignKey(pl => pl.UserId)
@@ -169,7 +179,7 @@ public class AppDbContext : DbContext
     .WithMany(c => c.CommentLike)
     .HasForeignKey(cl => cl.CommentId)
     .OnDelete(DeleteBehavior.Restrict);
-    
+
   }
 
 }
