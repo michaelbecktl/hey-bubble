@@ -107,7 +107,8 @@ public class AppDbContext : DbContext
     modelBuilder.Entity<Post>()
     .HasOne(p => p.User)
     .WithMany(u => u.Posts)
-    .HasForeignKey(p => p.UserId);
+    .HasForeignKey(p => p.UserId)
+    .OnDelete(DeleteBehavior.Cascade);
 
     modelBuilder.Entity<Post>().HasData(postSeed);
 
@@ -124,7 +125,7 @@ public class AppDbContext : DbContext
       new Comment
       {
         PostId = 1,
-        CommentId = 1,
+        CommentId = 2,
         UserId = -2,
         Content = "Hey there!",
         CreatedAt = new DateTime (2025, 8, 20, 10, 16, 0)
@@ -132,14 +133,18 @@ public class AppDbContext : DbContext
     };
 
     modelBuilder.Entity<Comment>()
-    .HasOne(c => c.Post)
-    .WithMany(p => p.Comments)
-    .HasForeignKey(c => c.PostId);
-
-    modelBuilder.Entity<Comment>()
     .HasOne(c => c.User)
     .WithMany(u => u.Comments)
-    .HasForeignKey(c => c.UserId);
+    .HasForeignKey(c => c.UserId)
+    .OnDelete(DeleteBehavior.NoAction);
+
+    modelBuilder.Entity<Comment>()
+    .HasOne(c => c.Post)
+    .WithMany(p => p.Comments)
+    .HasForeignKey(c => c.PostId)
+    .OnDelete(DeleteBehavior.Cascade);
+
+    modelBuilder.Entity<Comment>().HasData(commentSeeds);
   }
 
 }

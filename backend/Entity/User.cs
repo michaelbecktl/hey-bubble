@@ -30,7 +30,7 @@ namespace Backend.Entity
   public class UserProfile
   {
     [Key]
-    [ForeignKey("User")]
+    [ForeignKey("UserId")]
     public int UserId { get; set; }
 
     [StringLength(30, MinimumLength = 3)]
