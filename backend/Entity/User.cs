@@ -24,6 +24,10 @@ namespace Backend.Entity
     public UserProfile? UserProfile { get; set; }
     public ICollection<Post>? Posts { get; set; } = new List<Post>();
     public ICollection<Comment>? Comments { get; set; } = new List<Comment>();
+
+    public ICollection<PostLike>? PostLikes { get; set; } = new List<PostLike>();
+
+    public ICollection<CommentLike>? CommentLike { get; set; } = new List<CommentLike>();
   }
 
   // User's Profile Information Model //
@@ -53,10 +57,6 @@ namespace Backend.Entity
     public required int Followers { get; set; }
 
     public User User { get; set; } = null!;
-
-    public ICollection<PostLike>? PostLikes { get; set; } = new List<PostLike>();
-
-    public ICollection<CommentLike>? CommentLike { get; set; } = new List<CommentLike>();
 
     }
 }

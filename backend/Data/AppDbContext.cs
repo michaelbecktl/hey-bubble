@@ -145,6 +145,31 @@ public class AppDbContext : DbContext
     .OnDelete(DeleteBehavior.Cascade);
 
     modelBuilder.Entity<Comment>().HasData(commentSeeds);
+
+    modelBuilder.Entity<PostLike>()
+    .HasOne(pl => pl.User)
+    .WithMany(u => u.PostLikes)
+    .HasForeignKey(pl => pl.UserId)
+    .OnDelete(DeleteBehavior.Cascade);
+
+    modelBuilder.Entity<PostLike>()
+    .HasOne(pl => pl.Post)
+    .WithMany(p => p.PostLikes)
+    .HasForeignKey(pl => pl.PostId)
+    .OnDelete(DeleteBehavior.Restrict);
+
+    modelBuilder.Entity<CommentLike>()
+    .HasOne(cl => cl.User)
+    .WithMany(u => u.CommentLike)
+    .HasForeignKey(cl => cl.UserId)
+    .OnDelete(DeleteBehavior.Cascade);
+
+    modelBuilder.Entity<CommentLike>()
+    .HasOne(cl => cl.Comment)
+    .WithMany(c => c.CommentLike)
+    .HasForeignKey(cl => cl.CommentId)
+    .OnDelete(DeleteBehavior.Restrict);
+    
   }
 
 }
