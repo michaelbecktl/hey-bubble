@@ -24,5 +24,7 @@ namespace Backend.Entity
 
     public ICollection<Comment>? Comments { get; set; } = new List<Comment>();
 
+    public ICollection<PostLike>? PostLikes { get; set; } = new List<PostLike>();
+
   }
 }

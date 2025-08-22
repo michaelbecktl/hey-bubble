@@ -54,5 +54,9 @@ namespace Backend.Entity
 
     public User User { get; set; } = null!;
 
+    public ICollection<PostLike>? PostLikes { get; set; } = new List<PostLike>();
+
+    public ICollection<CommentLike>? CommentLike { get; set; } = new List<CommentLike>();
+
     }
 }

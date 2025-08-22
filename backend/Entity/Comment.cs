@@ -26,7 +26,7 @@ namespace Backend.Entity
 
     public Post Post { get; set; } = null!;
     public User User { get; set; } = null!;
-
+    public ICollection<CommentLike>? CommentLike { get; set; } = new List<CommentLike>();
 
   }
 }
