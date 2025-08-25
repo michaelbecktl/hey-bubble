@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250822011015_PostAndCommentTable")]
+    partial class PostAndCommentTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,21 +86,6 @@ namespace backend.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Backend.Entity.CommentLike", b =>
-                {
-                    b.Property<int>("CommentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CommentId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("CommentLikes");
-                });
-
             modelBuilder.Entity("Backend.Entity.Post", b =>
                 {
                     b.Property<int>("PostId")
@@ -149,21 +137,6 @@ namespace backend.Migrations
                             CreatedAt = new DateTime(2025, 8, 20, 10, 12, 0, 0, DateTimeKind.Unspecified),
                             UserId = -3
                         });
-                });
-
-            modelBuilder.Entity("Backend.Entity.PostLike", b =>
-                {
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PostId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("PostLikes");
                 });
 
             modelBuilder.Entity("Backend.Entity.User", b =>
@@ -322,25 +295,6 @@ namespace backend.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Backend.Entity.CommentLike", b =>
-                {
-                    b.HasOne("Backend.Entity.Comment", "Comment")
-                        .WithMany("CommentLike")
-                        .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Backend.Entity.User", "User")
-                        .WithMany("CommentLike")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Comment");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Backend.Entity.Post", b =>
                 {
                     b.HasOne("Backend.Entity.User", "User")
@@ -348,25 +302,6 @@ namespace backend.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Backend.Entity.PostLike", b =>
-                {
-                    b.HasOne("Backend.Entity.Post", "Post")
-                        .WithMany("PostLikes")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Backend.Entity.User", "User")
-                        .WithMany("PostLikes")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Post");
 
                     b.Navigation("User");
                 });
@@ -382,25 +317,14 @@ namespace backend.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Backend.Entity.Comment", b =>
-                {
-                    b.Navigation("CommentLike");
-                });
-
             modelBuilder.Entity("Backend.Entity.Post", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("PostLikes");
                 });
 
             modelBuilder.Entity("Backend.Entity.User", b =>
                 {
-                    b.Navigation("CommentLike");
-
                     b.Navigation("Comments");
-
-                    b.Navigation("PostLikes");
 
                     b.Navigation("Posts");
 
