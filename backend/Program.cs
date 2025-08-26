@@ -46,6 +46,9 @@ else
     });
     
   builder.Services.AddScoped<IUserService, UserService>();
+  builder.Services.AddScoped<IPostService, PostService>();
+
+
   builder.WebHost.UseUrls(mobileAppUrl ?? "https://localhost:7031;http://localhost:5218"); // !! REMOVE THIS IF PHYSICAL MOBILE TESTING NOT REQUIRED !! //
   builder.Services.AddCors(options =>
   {
