@@ -7,8 +7,8 @@ namespace Backend.Services
   {
     Task<Post[]?> GetPublicPostsAsync();
 
-    Task<Post[]?> GetFollowedPost(string username);
+    Task<Post[]?> GetFollowedPostsAsync(string username);
 
-    Task<Post[]?> GetUserPost(string username);
+    Task<Post[]?> GetUserPostsAsync(string username);
   }
 }

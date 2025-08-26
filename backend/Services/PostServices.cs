@@ -14,37 +14,56 @@ public class PostService(AppDbContext context, IConfiguration configuration) : I
   public async Task<Post[]?> GetPublicPostsAsync()
   {
     var posts = await context.Posts
+    .Include(p => p.User)
+    .ThenInclude(u => u.UserProfile)
+    .Select(p => new PostDTO
+    {
+      PostId = p.PostId,
+      UserId = p.UserId,
+      DisplayName = p.User.UserProfile != null ? p.User.UserProfile.DisplayName : string.Empty,
+      Content = p.Content,
+      CreatedAt = p.CreatedAt,
+      UpdatedAt = p.UpdatedAt,
+      MediaUrl = p.MediaUrl,
+      MediaType = p.MediaType,
+      LikeCount = p.LikeCount,
+      CommentCount = p.CommentCount,
+    })
     .ToArrayAsync();
 
     return posts;
   }
 
-  public async Task<Post[]?> GetFollowedPostsAsync(string username)
+  // ------- To Update with actual logic after Followers table is created ------- //
+  // public async Task<Post[]?> GetFollowedPostsAsync(string username)
+  // {
+  //   var posts = await context.Posts
+  //   .Where(post => post.UserId !=  )
+  //   .ToArrayAsync();
+
+  // }
+
+  public async Task<Post[]?> GetUserPostsAsync(int userId)
   {
     var posts = await context.Posts
-    .Where(post => post.UserId != )
+    .Include(p => p.User)
+    .ThenInclude(u => u.UserProfile)
+    .Where(p => p.UserId == userId)
+    .Select(p => new PostDTO
+    {
+      PostId = p.PostId,
+      UserId = p.UserId,
+      DisplayName = p.User.UserProfile != null ? p.User.UserProfile.DisplayName : string.Empty,
+      Content = p.Content,
+      CreatedAt = p.CreatedAt,
+      UpdatedAt = p.UpdatedAt,
+      MediaUrl = p.MediaUrl,
+      MediaType = p.MediaType,
+      LikeCount = p.LikeCount,
+      CommentCount = p.CommentCount,
+    })
     .ToArrayAsync();
 
-  }
-
-  public async Task<Post[]?> GetUserPostsAsync(string username)
-  {
-
-  }
-
-  private async Task<int?> GetUserIdByUsername(string username)
-  {
-    return await context.Users
-    .Where(user => user.Username == username)
-    .Select(user => user.Id)
-    .FirstOrDefaultAsync();
-  }
-
-  private async Task<string?> GetDisplayNameById(int userId)
-  {
-    return await context.UserProfiles
-    .Where(user => user.UserId == userId)
-    .Select(user => user.DisplayName)
-    .FirstOrDefaultAsync();
+    return posts;
   }
 }

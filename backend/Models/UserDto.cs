@@ -10,7 +10,7 @@ public class PostDTO
   public int PostId { get; set; }
   public int UserId { get; set; }
 
-  public required string DisplayName { get; set; }
+  public string? DisplayName { get; set; }
 
   public required string Content { get; set; }
 
