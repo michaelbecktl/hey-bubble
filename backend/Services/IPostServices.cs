@@ -10,5 +10,6 @@ namespace Backend.Services
     // Task<Post[]?> GetFollowedPostsAsync(string username);
 
     Task<PostDTO[]?> GetUserPostsAsync(int userId);
+    Task<Post> CreateNewPostAsync(int userId, NewPostDTO request);
   }
 }

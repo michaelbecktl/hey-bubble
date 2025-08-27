@@ -33,7 +33,7 @@ public class PostController : ControllerBase
 
     return Ok(posts);
   }
-  
+
   [Authorize]
   [HttpGet("user")]
 
@@ -41,10 +41,19 @@ public class PostController : ControllerBase
   {
     var userId = RetrieveUserId();
     var posts = await _postService.GetUserPostsAsync(userId);
-    
+
     return Ok(posts);
   }
-  
 
+  [Authorize]
+  [HttpPost]
+
+  public async Task<IActionResult> CreatePost(NewPostDTO request)
+  {
+    var userId = RetrieveUserId();
+    var newPost = await _postService.CreateNewPostAsync(userId, request);
+
+    return CreatedAtAction(nameof(CreatePost), newPost);
+  }
 
 }

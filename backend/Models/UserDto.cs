@@ -21,6 +21,14 @@ public class PostDTO
   public int? LikeCount { get; set; }
 
   public int? CommentCount { get; set; }
-  
+
   public bool isLikedByUser { get; set; }
+}
+
+public class NewPostDTO
+{
+  public required string Content { get; set; }
+  public string? MediaUrl { get; set; }
+  public string? MediaType { get; set; }
+  
 }

@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -28,7 +29,7 @@ public class PostService(AppDbContext context) : IPostService
       MediaType = p.MediaType,
       LikeCount = p.LikeCount,
       CommentCount = p.CommentCount,
-    isLikedByUser = p.PostLikes != null && p.PostLikes.Any(pl => pl.UserId == userId)
+      isLikedByUser = p.PostLikes != null && p.PostLikes.Any(pl => pl.UserId == userId)
     })
     .ToArrayAsync();
 
@@ -67,5 +68,22 @@ public class PostService(AppDbContext context) : IPostService
     .ToArrayAsync();
 
     return posts;
+  }
+
+  public async Task<Post> CreateNewPostAsync(int userId, NewPostDTO request)
+  {
+    var newPost = new Post
+    {
+      UserId = userId,
+      Content = request.Content,
+      MediaUrl = request.MediaUrl,
+      MediaType = request.MediaType,
+      CreatedAt = DateTime.UtcNow
+    };
+
+    context.Posts.Add(newPost);
+    await context.SaveChangesAsync();
+
+    return newPost;
   }
 }

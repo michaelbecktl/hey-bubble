@@ -52,7 +52,7 @@ public class UserController : ControllerBase
     if (user is null)
       return Conflict("Username or email already exists");
 
-    return CreatedAtAction(nameof(Get), newUser);
+    return CreatedAtAction(nameof(Post), newUser);
   }
 
   [HttpPost("login")]
