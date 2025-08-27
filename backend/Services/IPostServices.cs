@@ -5,7 +5,7 @@ namespace Backend.Services
 {
   public interface IPostService
   {
-    Task<PostDTO[]?> GetPublicPostsAsync();
+    Task<PostDTO[]?> GetPublicPostsAsync(int userId);
 
     // Task<Post[]?> GetFollowedPostsAsync(string username);
 
