@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Backend.Entity;
 using Backend.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -16,10 +17,34 @@ public class PostController : ControllerBase
     _postService = postService;
   }
 
-  // [Authorize]
-  // [HttpGet]
+  public int RetrieveUserId()
+  {
+    var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+    return int.Parse(userIdString);
+  }
 
-  // public async Task<ActionResult> Get() =>
+  [Authorize]
+  [HttpGet]
+
+  public async Task<ActionResult> GetPublicPosts()
+  {
+    var userId = RetrieveUserId();
+    var posts = await _postService.GetPublicPostsAsync(userId);
+
+    return Ok(posts);
+  }
+  
+  [Authorize]
+  [HttpGet("user")]
+
+  public async Task<ActionResult> GetUserPosts()
+  {
+    var userId = RetrieveUserId();
+    var posts = await _postService.GetUserPostsAsync(userId);
+    
+    return Ok(posts);
+  }
+  
 
 
 }
