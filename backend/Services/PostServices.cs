@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using static UserController;
 
-public class PostService(AppDbContext context, IConfiguration configuration) : IPostService
+public class PostService(AppDbContext context) : IPostService
 {
 
-  public async Task<Post[]?> GetPublicPostsAsync()
+  public async Task<PostDTO[]?> GetPublicPostsAsync()
   {
     var posts = await context.Posts
     .Include(p => p.User)
@@ -43,7 +43,7 @@ public class PostService(AppDbContext context, IConfiguration configuration) : I
 
   // }
 
-  public async Task<Post[]?> GetUserPostsAsync(int userId)
+  public async Task<PostDTO[]?> GetUserPostsAsync(int userId)
   {
     var posts = await context.Posts
     .Include(p => p.User)

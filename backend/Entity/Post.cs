@@ -20,6 +20,8 @@ namespace Backend.Entity
     public string? MediaType { get; set; }
     public int? LikeCount { get; set; }
 
+    public int? CommentCount { get; set; }
+
     public User User { get; set; } = null!;
 
     public ICollection<Comment>? Comments { get; set; } = new List<Comment>();
