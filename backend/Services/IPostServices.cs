@@ -11,5 +11,7 @@ namespace Backend.Services
 
     Task<PostDTO[]?> GetUserPostsAsync(int userId);
     Task<Post> CreateNewPostAsync(int userId, NewPostDTO request);
+
+    Task<bool> DeletePostAsync(int userId, int postId);
   }
 }

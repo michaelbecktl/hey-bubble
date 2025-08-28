@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Text;
 using Backend.Entity;
 using Backend.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 using Microsoft.IdentityModel.Tokens;
@@ -85,5 +86,14 @@ public class PostService(AppDbContext context) : IPostService
     await context.SaveChangesAsync();
 
     return newPost;
+  }
+
+  public async Task<bool> DeletePostAsync(int userId, int postId)
+  {
+    var deletedPost = await context.Posts
+    .Where(p => p.PostId == postId && p.UserId == userId)
+    .ExecuteDeleteAsync();
+
+    return deletedPost > 0;
   }
 }

@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Backend.Entity;
 using Backend.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,7 +26,6 @@ public class PostController : ControllerBase
 
   [Authorize]
   [HttpGet]
-
   public async Task<ActionResult> GetPublicPosts()
   {
     var userId = RetrieveUserId();
@@ -35,8 +35,7 @@ public class PostController : ControllerBase
   }
 
   [Authorize]
-  [HttpGet("user")]
-
+  [HttpGet("userpost")]
   public async Task<ActionResult> GetUserPosts()
   {
     var userId = RetrieveUserId();
@@ -47,13 +46,33 @@ public class PostController : ControllerBase
 
   [Authorize]
   [HttpPost]
-
   public async Task<IActionResult> CreatePost(NewPostDTO request)
   {
     var userId = RetrieveUserId();
     var newPost = await _postService.CreateNewPostAsync(userId, request);
 
     return CreatedAtAction(nameof(CreatePost), newPost);
+  }
+
+  [Authorize]
+  [HttpDelete("{postId}")]
+  public async Task<IActionResult> Delete(string postId)
+  {
+    {
+      var userId = RetrieveUserId();
+
+      var deletedPost = await _postService.DeletePostAsync(userId, int.Parse(postId));
+
+      if (deletedPost) 
+      {
+        return Ok(new { message = "Post deleted successfully" });
+      }
+      else
+      {
+        return NotFound(new { message = "Post not found" });
+      }
+    }
+
   }
 
 }
