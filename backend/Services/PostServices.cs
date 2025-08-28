@@ -13,7 +13,7 @@ using static UserController;
 public class PostService(AppDbContext context) : IPostService
 {
 
-  public async Task<PostDTO[]?> GetPublicPostsAsync(int userId)
+  public async Task<IEnumerable<PostDTO>?> GetPublicPostsAsync(int userId)
   {
     var posts = await context.Posts
     .Include(p => p.User)
@@ -32,7 +32,7 @@ public class PostService(AppDbContext context) : IPostService
       CommentCount = p.CommentCount,
       isLikedByUser = p.PostLikes != null && p.PostLikes.Any(pl => pl.UserId == userId)
     })
-    .ToArrayAsync();
+    .ToListAsync();
 
     return posts;
   }
@@ -46,7 +46,7 @@ public class PostService(AppDbContext context) : IPostService
 
   // }
 
-  public async Task<PostDTO[]?> GetUserPostsAsync(int userId)
+  public async Task<IEnumerable<PostDTO>?> GetUserPostsAsync(int userId)
   {
     var posts = await context.Posts
     .Include(p => p.User)
@@ -66,7 +66,7 @@ public class PostService(AppDbContext context) : IPostService
       CommentCount = p.CommentCount,
       isLikedByUser = p.PostLikes != null && p.PostLikes.Any(pl => pl.UserId == userId)
     })
-    .ToArrayAsync();
+    .ToListAsync();
 
     return posts;
   }
