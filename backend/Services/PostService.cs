@@ -1,14 +1,7 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+
 using Backend.Entity;
 using Backend.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
-
-using Microsoft.IdentityModel.Tokens;
-using static UserController;
 
 public class PostService(AppDbContext context) : IPostService
 {

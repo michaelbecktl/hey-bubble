@@ -1,5 +1,4 @@
 using Backend.Entity;
-using static UserController;
 
 namespace Backend.Services
 {
