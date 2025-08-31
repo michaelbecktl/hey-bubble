@@ -29,7 +29,7 @@ public class CommentService(AppDbContext context) : ICommentService
     return comments;
   }
 
-  public async Task<Comment> CreateNewComment(int userId, NewCommentDTO request)
+  public async Task<Comment> CreateNewCommentAsync(int userId, NewCommentDTO request)
   {
     var newComment = new Comment
     {
@@ -45,5 +45,29 @@ public class CommentService(AppDbContext context) : ICommentService
     await context.SaveChangesAsync();
 
     return newComment;
+  }
+
+  public async Task<Comment?> UpdateCommentAsync(int userId, int commentId, UpdateCommentDTO request)
+  {
+    var comment = await context.Comments
+    .FirstOrDefaultAsync(c => c.CommentId == commentId && c.UserId == userId);
+
+    if (comment == null) return null;
+
+    comment.Content = request.Content;
+    comment.UpdatedAt = DateTime.UtcNow;
+
+    await context.SaveChangesAsync();
+
+    return comment;
+  }
+
+  public async Task<bool> DeleteCommentAsync(int userId, int commentId)
+  {
+    var deletedComment = await context.Comments
+    .Where(c => c.CommentId == commentId && c.UserId == userId)
+    .ExecuteDeleteAsync();
+
+    return deletedComment > 0;
   }
 }

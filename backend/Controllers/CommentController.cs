@@ -40,8 +40,30 @@ public class CommentController : ControllerBase
   public async Task<IActionResult> CreateNewComment(NewCommentDTO request)
   {
     var userId = RetrieveUserId();
-    var newComment = await _commentService.CreateNewComment(userId, request);
+    var newComment = await _commentService.CreateNewCommentAsync(userId, request);
 
     return CreatedAtAction(nameof(CreateNewComment), newComment);
+  }
+
+  [Authorize]
+  [HttpPatch("{commentId}")]
+  public async Task<IActionResult> UpdateComment(string commentId, UpdateCommentDTO request)
+  {
+    var userId = RetrieveUserId();
+    var updatedComment = await _commentService.UpdateCommentAsync(userId, int.Parse(commentId), request);
+
+    if (updatedComment != null) return Ok(new { message = "Comment updated successfully" });
+    else return NotFound(new { message = "Comment not found" });
+  }
+
+  [Authorize]
+  [HttpDelete("{commentId}")]
+  public async Task<IActionResult> DeleteComment(string commentId)
+  {
+    var userId = RetrieveUserId();
+    var deletedComment = await _commentService.DeleteCommentAsync(userId, int.Parse(commentId));
+
+    if (deletedComment) return Ok(new { message = "Comment deleted successfully" });
+    else return NotFound(new { message = "Comment not found" });
   }
 }

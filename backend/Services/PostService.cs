@@ -81,6 +81,22 @@ public class PostService(AppDbContext context) : IPostService
     return newPost;
   }
 
+  public async Task<Post?> UpdatePostAsync(int userId, int postId, UpdatePostDTO request)
+  {
+    var post = await context.Posts
+    .FirstOrDefaultAsync(p => p.PostId == postId && p.UserId == userId);
+
+    if (post == null) return null;
+
+    post.Content = request.Content;
+    post.UpdatedAt = DateTime.UtcNow;
+
+    await context.SaveChangesAsync();
+
+    return post;
+  }
+
+
   public async Task<bool> DeletePostAsync(int userId, int postId)
   {
     var deletedPost = await context.Posts

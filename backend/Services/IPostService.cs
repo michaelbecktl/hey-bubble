@@ -10,7 +10,7 @@ namespace Backend.Services
 
     Task<IEnumerable<PostDTO>?> GetUserPostsAsync(int userId);
     Task<Post> CreateNewPostAsync(int userId, NewPostDTO request);
-
+    Task<Post?> UpdatePostAsync(int userId, int postId, UpdatePostDTO request);
     Task<bool> DeletePostAsync(int userId, int postId);
   }
 }

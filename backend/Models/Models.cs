@@ -33,6 +33,12 @@ public class NewPostDTO
 
 }
 
+public class UpdatePostDTO
+{
+  public required string Content { get; set; }
+
+}
+
 public class CommentDTO
 {
   public int CommentId { get; set; }
@@ -54,4 +60,10 @@ public class NewCommentDTO
   public required string Content { get; set; }
   public string? MediaUrl { get; set; }
   public string? MediaType { get; set; }
+}
+
+public class UpdateCommentDTO
+{
+  public required string Content { get; set; }
+
 }

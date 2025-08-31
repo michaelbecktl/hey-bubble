@@ -52,22 +52,28 @@ public class PostController : ControllerBase
   }
 
   [Authorize]
+  [HttpPatch("{postId}")]
+  public async Task<IActionResult> UpdatePost(string postId, UpdatePostDTO request)
+  {
+    var userId = RetrieveUserId();
+    var updatedPost = await _postService.UpdatePostAsync(userId, int.Parse(postId), request);
+
+    if (updatedPost != null) return Ok(new { message = "Post updated successfully" });
+    else return NotFound(new { message = "Post not found" });
+
+  }
+
+  [Authorize]
   [HttpDelete("{postId}")]
-  public async Task<IActionResult> Delete(string postId)
+  public async Task<IActionResult> DeletePost(string postId)
   {
     {
       var userId = RetrieveUserId();
 
       var deletedPost = await _postService.DeletePostAsync(userId, int.Parse(postId));
 
-      if (deletedPost) 
-      {
-        return Ok(new { message = "Post deleted successfully" });
-      }
-      else
-      {
-        return NotFound(new { message = "Post not found" });
-      }
+      if (deletedPost) return Ok(new { message = "Post deleted successfully" });
+      else return NotFound(new { message = "Post not found" });
     }
 
   }
