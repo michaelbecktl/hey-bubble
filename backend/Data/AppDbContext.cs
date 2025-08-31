@@ -96,7 +96,9 @@ public class AppDbContext : DbContext
         UserId = -1,
         Content = "Hi everyone! Welcome to Bubble!",
         CreatedAt = new DateTime(2025, 8, 20, 9, 56, 0),
-        UpdatedAt = null
+        UpdatedAt = null,
+        LikeCount = 2,
+        CommentCount = 2,
       },
       new Post
       {
@@ -124,7 +126,8 @@ public class AppDbContext : DbContext
         CommentId = 1,
         UserId = -3,
         Content = "Hi!",
-        CreatedAt = new DateTime (2025, 8, 20, 10, 9, 0)
+        CreatedAt = new DateTime (2025, 8, 20, 10, 9, 0),
+        LikeCount = 1,
       },
       new Comment
       {
@@ -132,7 +135,8 @@ public class AppDbContext : DbContext
         CommentId = 2,
         UserId = -2,
         Content = "Hey there!",
-        CreatedAt = new DateTime (2025, 8, 20, 10, 16, 0)
+        CreatedAt = new DateTime (2025, 8, 20, 10, 16, 0),
+        LikeCount = 1,
       }
     };
 
@@ -168,6 +172,22 @@ public class AppDbContext : DbContext
     .HasForeignKey(pl => pl.PostId)
     .OnDelete(DeleteBehavior.Restrict);
 
+    var postLikeSeed = new[]
+    {
+      new PostLike
+      {
+        PostId = 1,
+        UserId = -1
+      },
+      new PostLike
+      {
+        PostId = 2,
+        UserId = -1
+      }
+    };
+
+    modelBuilder.Entity<PostLike>().HasData(postLikeSeed);
+
     modelBuilder.Entity<CommentLike>()
     .HasOne(cl => cl.User)
     .WithMany(u => u.CommentLike)
@@ -179,6 +199,22 @@ public class AppDbContext : DbContext
     .WithMany(c => c.CommentLike)
     .HasForeignKey(cl => cl.CommentId)
     .OnDelete(DeleteBehavior.Restrict);
+
+    var commentLikeSeed = new[]
+    {
+      new CommentLike
+      {
+        CommentId = 1,
+        UserId = -2
+      },
+      new CommentLike
+      {
+        CommentId = 1,
+        UserId = -3
+      }
+    };
+
+    modelBuilder.Entity<CommentLike>().HasData(commentLikeSeed);
 
   }
 
