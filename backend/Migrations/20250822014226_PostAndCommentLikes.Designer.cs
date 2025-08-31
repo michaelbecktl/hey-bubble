@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250822014226_PostAndCommentLikes")]
+    partial class PostAndCommentLikes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,7 +71,6 @@ namespace backend.Migrations
                             CommentId = 1,
                             Content = "Hi!",
                             CreatedAt = new DateTime(2025, 8, 20, 10, 9, 0, 0, DateTimeKind.Unspecified),
-                            LikeCount = 1,
                             PostId = 1,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = -3
@@ -78,7 +80,6 @@ namespace backend.Migrations
                             CommentId = 2,
                             Content = "Hey there!",
                             CreatedAt = new DateTime(2025, 8, 20, 10, 16, 0, 0, DateTimeKind.Unspecified),
-                            LikeCount = 1,
                             PostId = 1,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = -2
@@ -98,18 +99,6 @@ namespace backend.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("CommentLikes");
-
-                    b.HasData(
-                        new
-                        {
-                            CommentId = 1,
-                            UserId = -2
-                        },
-                        new
-                        {
-                            CommentId = 1,
-                            UserId = -3
-                        });
                 });
 
             modelBuilder.Entity("Backend.Entity.Post", b =>
@@ -119,9 +108,6 @@ namespace backend.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PostId"));
-
-                    b.Property<int?>("CommentCount")
-                        .HasColumnType("int");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -155,10 +141,8 @@ namespace backend.Migrations
                         new
                         {
                             PostId = 1,
-                            CommentCount = 2,
                             Content = "Hi everyone! Welcome to Bubble!",
                             CreatedAt = new DateTime(2025, 8, 20, 9, 56, 0, 0, DateTimeKind.Unspecified),
-                            LikeCount = 2,
                             UserId = -1
                         },
                         new
@@ -183,18 +167,6 @@ namespace backend.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("PostLikes");
-
-                    b.HasData(
-                        new
-                        {
-                            PostId = 1,
-                            UserId = -1
-                        },
-                        new
-                        {
-                            PostId = 2,
-                            UserId = -1
-                        });
                 });
 
             modelBuilder.Entity("Backend.Entity.User", b =>

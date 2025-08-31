@@ -23,7 +23,7 @@ public class UserService(AppDbContext context, IConfiguration configuration) : I
     bool isMatchingPassword = BCrypt.Net.BCrypt.Verify(userLogin.Password, existingUser.Password);
     if (!isMatchingPassword) return null;
 
-    return CreateToken(userLogin);
+    return CreateToken(existingUser.Id.ToString());
 
   }
 
@@ -48,11 +48,11 @@ public class UserService(AppDbContext context, IConfiguration configuration) : I
     return newUser;
   }
 
-  private string CreateToken(UserLogin user)
+  private string CreateToken(string userId)
   {
     var claims = new List<Claim>
     {
-      new Claim(ClaimTypes.Name, user.Username)
+      new Claim(ClaimTypes.NameIdentifier, userId)
     };
 
     var key = new SymmetricSecurityKey(

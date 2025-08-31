@@ -1,5 +1,7 @@
 import { View, Text } from 'react-native'
 
+type Props = {}
+
 function UserComment() {
   return (
     <View>
@@ -12,7 +14,7 @@ function UserComment() {
           <Text>Comment</Text>
         </View>
         <View>
-          <Text>Date</Text>Like Button
+          <Text>Date</Text>Like Button<Text>Like Counter</Text>
         </View>
       </View>
     </View>

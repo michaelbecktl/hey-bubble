@@ -52,7 +52,7 @@ public class UserController : ControllerBase
     if (user is null)
       return Conflict("Username or email already exists");
 
-    return CreatedAtAction(nameof(Get), newUser);
+    return CreatedAtAction(nameof(Post), newUser);
   }
 
   [HttpPost("login")]
@@ -61,6 +61,9 @@ public class UserController : ControllerBase
     var token = await _userService.LoginAsync(userLogin);
     if (User is null)
       return Unauthorized("Invalid username and password");
+
+    Console.WriteLine("Test Console Write:" + token);
+    
 
     return Ok(token);
   }
