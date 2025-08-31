@@ -1,4 +1,4 @@
-import { Post, UserProfile } from '@/models/models'
+import { Post } from '@/models/models'
 import { View, StyleSheet } from 'react-native'
 import AppText from './AppText'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
@@ -6,46 +6,19 @@ import Octicons from '@expo/vector-icons/Octicons'
 import ProfilePhoto from './ProfilePhoto'
 
 type Props = {
-  postId: number
+  post: Post
 }
 
-function UserPost({ postId }: Props) {
-  // Replace with API call to retrieve post content data using postId //
-  const post: Post = {
-    postId: -1,
-    userId: -123,
-    content: 'This page is fire!',
-    createdAt: '01082025',
-    updatedAt: null,
-    mediaUrl: null,
-    mediaType: null,
-  }
-
-  // Replace with API call to retrieve poster data using userId //
-  const userProfile: UserProfile = {
-    userId: -123,
-    displayName: 'Test User',
-    dob: '12/06/1992',
-    profilePhoto: null,
-    gender: 'F',
-    country: 'MY',
-    nativeLanguage: 'EN',
-    learningLanguage: 'JP',
-  }
-
-  // Replace with API call to retrieve like and comment count //
-  const likeCount = '50'
-  const commentCount = '10'
-
+function UserPost({ post }: Props) {
   return (
     <View style={styles.container}>
       <View>
         <View style={styles.header}>
           <View style={styles.photo}>
-            <ProfilePhoto source={userProfile.profilePhoto} type="post" />
+            <ProfilePhoto source={null} type="post" />
           </View>
           <View style={styles.user}>
-            <AppText text={userProfile.displayName} type="poster" />
+            <AppText text={post.displayName} type="poster" />
             <AppText
               text={post.updatedAt ? post.updatedAt : post.createdAt}
               type="sub"
@@ -68,7 +41,10 @@ function UserPost({ postId }: Props) {
             color="#8a8a8aff"
             style={{ marginRight: 4 }}
           />
-          <AppText text={likeCount} type="sub" />
+          <AppText
+            text={post.likeCount ? post.likeCount.toString() : '0'}
+            type="sub"
+          />
         </View>
         <View style={styles.footerComponents}>
           <FontAwesome
@@ -77,7 +53,10 @@ function UserPost({ postId }: Props) {
             color="#8a8a8aff"
             style={{ marginRight: 4 }}
           />
-          <AppText text={commentCount} type="sub" />
+          <AppText
+            text={post.commentCount ? post.commentCount.toString() : '0'}
+            type="sub"
+          />
         </View>
       </View>
     </View>

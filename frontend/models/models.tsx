@@ -21,9 +21,13 @@ export interface UserProfile {
 export interface Post {
   postId: number
   userId: number
+  displayName: string
   content: string
   createdAt: string
   updatedAt?: string | null
   mediaUrl?: string | null
   mediaType?: string | null
+  likeCount?: number | null
+  commentCount?: number | null
+  isLikedByUser: boolean
 }
