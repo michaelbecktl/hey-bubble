@@ -31,3 +31,17 @@ export interface Post {
   commentCount?: number | null
   isLikedByUser: boolean
 }
+
+export interface PostComment {
+  commentId: number
+  postId: number
+  userId: number
+  displayName: string
+  content: string
+  createdAt: string
+  updatedAt?: string | null
+  mediaUrl?: string | null
+  mediaType?: string | null
+  likeCount?: number | null
+  isLikedByUser: boolean
+}
