@@ -1,5 +1,6 @@
 import { Post } from '@/models/models'
-import { View, StyleSheet } from 'react-native'
+import { router } from 'expo-router'
+import { View, StyleSheet, Pressable } from 'react-native'
 import AppText from './AppText'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import Octicons from '@expo/vector-icons/Octicons'
@@ -10,6 +11,13 @@ type Props = {
 }
 
 function UserPost({ post }: Props) {
+  function navigateToPost(postId: number) {
+    router.push({
+      pathname: '/(protected)/pages/postfocused',
+      params: { postId: postId },
+    })
+  }
+
   return (
     <View style={styles.container}>
       <View>
@@ -46,18 +54,20 @@ function UserPost({ post }: Props) {
             type="sub"
           />
         </View>
-        <View style={styles.footerComponents}>
-          <FontAwesome
-            name="comment-o"
-            size={16}
-            color="#8a8a8aff"
-            style={{ marginRight: 4 }}
-          />
-          <AppText
-            text={post.commentCount ? post.commentCount.toString() : '0'}
-            type="sub"
-          />
-        </View>
+        <Pressable onPress={() => navigateToPost(post.postId)}>
+          <View style={styles.footerComponents}>
+            <FontAwesome
+              name="comment-o"
+              size={16}
+              color="#8a8a8aff"
+              style={{ marginRight: 4 }}
+            />
+            <AppText
+              text={post.commentCount ? post.commentCount.toString() : '0'}
+              type="sub"
+            />
+          </View>
+        </Pressable>
       </View>
     </View>
   )
