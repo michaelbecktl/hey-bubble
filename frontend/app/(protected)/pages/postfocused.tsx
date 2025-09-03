@@ -23,7 +23,7 @@ function PostFocused() {
 
   return (
     <>
-      <UserPost post={selectedPost} />
+      <UserPost post={selectedPost} commentsVisible={true} />
       {comments.map((comment: PostComment) => (
         <UserComment comment={comment} key={comment.commentId} />
       ))}

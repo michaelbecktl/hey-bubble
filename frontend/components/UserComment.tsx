@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native'
 import AppText from './AppText'
 import { FontAwesome, Octicons } from '@expo/vector-icons'
 import ProfilePhoto from './ProfilePhoto'
+import { RelativeTime } from './RelativeTime'
 
 type Props = {
   comment: PostComment
@@ -38,11 +39,10 @@ function UserComment({ comment }: Props) {
                 />
               </View>
               <View style={styles.footerComponents}>
-                <AppText
-                  text={
+                <RelativeTime
+                  date={
                     comment.updatedAt ? comment.updatedAt : comment.createdAt
                   }
-                  type="sub"
                 />
               </View>
             </View>

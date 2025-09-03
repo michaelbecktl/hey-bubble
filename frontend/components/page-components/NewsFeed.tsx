@@ -13,7 +13,9 @@ function NewsFeed() {
   return (
     <View style={styles.container}>
       {posts.map((post) => {
-        return <UserPost post={post} key={post.postId} />
+        return (
+          <UserPost post={post} commentsVisible={false} key={post.postId} />
+        )
       })}
     </View>
   )

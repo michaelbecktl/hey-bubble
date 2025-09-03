@@ -15,7 +15,7 @@ export default function ProtectedLayout() {
   }
 
   return (
-    <Stack>
+    <Stack screenOptions={{ headerBackButtonDisplayMode: 'minimal' }}>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen
         name="pages/postfocused"

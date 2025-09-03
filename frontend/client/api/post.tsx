@@ -9,6 +9,7 @@ export async function GetPublicPosts({ token }: { token: string | null }) {
     const response = await request
       .get(`${rootURL}`)
       .set('Authorization', `Bearer ${token}`)
+
     return response.body
   } catch (error: any) {
     throw error

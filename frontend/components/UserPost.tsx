@@ -5,12 +5,14 @@ import AppText from './AppText'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import Octicons from '@expo/vector-icons/Octicons'
 import ProfilePhoto from './ProfilePhoto'
+import { RelativeTime } from './RelativeTime'
 
 type Props = {
   post: Post
+  commentsVisible: boolean
 }
 
-function UserPost({ post }: Props) {
+function UserPost({ post, commentsVisible }: Props) {
   function navigateToPost(postId: number) {
     router.push({
       pathname: '/(protected)/pages/postfocused',
@@ -27,9 +29,8 @@ function UserPost({ post }: Props) {
           </View>
           <View style={styles.user}>
             <AppText text={post.displayName} type="poster" />
-            <AppText
-              text={post.updatedAt ? post.updatedAt : post.createdAt}
-              type="sub"
+            <RelativeTime
+              date={post.updatedAt ? post.updatedAt : post.createdAt}
             />
           </View>
           <View style={styles.options}>
@@ -54,7 +55,11 @@ function UserPost({ post }: Props) {
             type="sub"
           />
         </View>
-        <Pressable onPress={() => navigateToPost(post.postId)}>
+        <Pressable
+          onPress={
+            commentsVisible ? () => {} : () => navigateToPost(post.postId)
+          }
+        >
           <View style={styles.footerComponents}>
             <FontAwesome
               name="comment-o"

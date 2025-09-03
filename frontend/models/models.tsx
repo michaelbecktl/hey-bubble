@@ -23,8 +23,8 @@ export interface Post {
   userId: number
   displayName: string
   content: string
-  createdAt: string
-  updatedAt?: string | null
+  createdAt: Date
+  updatedAt?: Date | null
   mediaUrl?: string | null
   mediaType?: string | null
   likeCount?: number | null
@@ -38,8 +38,8 @@ export interface PostComment {
   userId: number
   displayName: string
   content: string
-  createdAt: string
-  updatedAt?: string | null
+  createdAt: Date
+  updatedAt?: Date | null
   mediaUrl?: string | null
   mediaType?: string | null
   likeCount?: number | null

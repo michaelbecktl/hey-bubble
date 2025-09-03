@@ -14,6 +14,7 @@ export default function TabsLayout() {
         tabBarStyle: {
           backgroundColor: '#F1EBFA',
         },
+        headerBackButtonDisplayMode: 'minimal',
       }}
     >
       <Tabs.Screen
