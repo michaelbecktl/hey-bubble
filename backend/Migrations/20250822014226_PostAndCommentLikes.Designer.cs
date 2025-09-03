@@ -72,7 +72,6 @@ namespace backend.Migrations
                             Content = "Hi!",
                             CreatedAt = new DateTime(2025, 8, 20, 10, 9, 0, 0, DateTimeKind.Unspecified),
                             PostId = 1,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = -3
                         },
                         new
@@ -81,7 +80,6 @@ namespace backend.Migrations
                             Content = "Hey there!",
                             CreatedAt = new DateTime(2025, 8, 20, 10, 16, 0, 0, DateTimeKind.Unspecified),
                             PostId = 1,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = -2
                         });
                 });
