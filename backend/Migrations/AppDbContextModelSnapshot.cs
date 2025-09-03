@@ -48,7 +48,7 @@ namespace backend.Migrations
                     b.Property<int>("PostId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
@@ -70,7 +70,6 @@ namespace backend.Migrations
                             CreatedAt = new DateTime(2025, 8, 20, 10, 9, 0, 0, DateTimeKind.Unspecified),
                             LikeCount = 1,
                             PostId = 1,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = -3
                         },
                         new
@@ -80,7 +79,6 @@ namespace backend.Migrations
                             CreatedAt = new DateTime(2025, 8, 20, 10, 16, 0, 0, DateTimeKind.Unspecified),
                             LikeCount = 1,
                             PostId = 1,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = -2
                         });
                 });

@@ -127,6 +127,7 @@ public class AppDbContext : DbContext
         UserId = -3,
         Content = "Hi!",
         CreatedAt = new DateTime (2025, 8, 20, 10, 9, 0),
+        UpdatedAt = null,
         LikeCount = 1,
       },
       new Comment
@@ -136,6 +137,7 @@ public class AppDbContext : DbContext
         UserId = -2,
         Content = "Hey there!",
         CreatedAt = new DateTime (2025, 8, 20, 10, 16, 0),
+        UpdatedAt = null,
         LikeCount = 1,
       }
     };

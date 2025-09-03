@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -7,7 +8,7 @@
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedCommentCountToPostTable : Migration
+    public partial class UpdatedCommentEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,6 +18,14 @@ namespace backend.Migrations
                 table: "Posts",
                 type: "int",
                 nullable: true);
+
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "UpdatedAt",
+                table: "Comments",
+                type: "datetime2",
+                nullable: true,
+                oldClrType: typeof(DateTime),
+                oldType: "datetime2");
 
             migrationBuilder.InsertData(
                 table: "CommentLikes",
@@ -31,15 +40,15 @@ namespace backend.Migrations
                 table: "Comments",
                 keyColumn: "CommentId",
                 keyValue: 1,
-                column: "LikeCount",
-                value: 1);
+                columns: new[] { "LikeCount", "UpdatedAt" },
+                values: new object[] { 1, null });
 
             migrationBuilder.UpdateData(
                 table: "Comments",
                 keyColumn: "CommentId",
                 keyValue: 2,
-                column: "LikeCount",
-                value: 1);
+                columns: new[] { "LikeCount", "UpdatedAt" },
+                values: new object[] { 1, null });
 
             migrationBuilder.InsertData(
                 table: "PostLikes",
@@ -92,19 +101,29 @@ namespace backend.Migrations
                 name: "CommentCount",
                 table: "Posts");
 
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "UpdatedAt",
+                table: "Comments",
+                type: "datetime2",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                oldClrType: typeof(DateTime),
+                oldType: "datetime2",
+                oldNullable: true);
+
             migrationBuilder.UpdateData(
                 table: "Comments",
                 keyColumn: "CommentId",
                 keyValue: 1,
-                column: "LikeCount",
-                value: null);
+                columns: new[] { "LikeCount", "UpdatedAt" },
+                values: new object[] { null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.UpdateData(
                 table: "Comments",
                 keyColumn: "CommentId",
                 keyValue: 2,
-                column: "LikeCount",
-                value: null);
+                columns: new[] { "LikeCount", "UpdatedAt" },
+                values: new object[] { null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.UpdateData(
                 table: "Posts",
