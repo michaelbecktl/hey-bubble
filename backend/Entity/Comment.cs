@@ -19,7 +19,7 @@ namespace Backend.Entity
     public required string Content { get; set; }
 
     public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
     public string? MediaUrl { get; set; }
     public string? MediaType { get; set; }
     public int? LikeCount { get; set; }
