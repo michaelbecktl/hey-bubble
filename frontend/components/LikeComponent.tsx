@@ -3,6 +3,7 @@ import { Octicons } from '@expo/vector-icons'
 import AppText from './AppText'
 import { useCallback, useMemo, useState } from 'react'
 import { Pressable } from 'react-native'
+import { useLike } from '@/client/hooks/like'
 
 type Props = {
   type: 'post' | 'comment'
@@ -15,26 +16,26 @@ function LikeComponent({ type, content }: Props) {
   )
   const [isLikedByUser, setIsLikedByUser] = useState(content.isLikedByUser)
 
-  const like = useLike()
-
   const contentId =
     type === 'post'
       ? (content as Post).postId
       : (content as PostComment).commentId
 
+  const like = useLike(contentId)
+
   const addLike = useCallback(
     async (id: number) => {
-      if (type === 'post') return await like.AddLikeToPost.mutateAsync(id)
-      if (type === 'comment') return await like.AddLikeToComment.mutateAsync(id)
+      if (type === 'post') return await like.addLikeToPost.mutateAsync(id)
+      if (type === 'comment') return await like.addLikeToComment.mutateAsync(id)
     },
     [type, like]
   )
 
   const removeLike = useCallback(
     async (id: number) => {
-      if (type === 'post') return await like.RemoveLikeFromPost.mutateAsync(id)
+      if (type === 'post') return await like.removeLikeFromPost.mutateAsync(id)
       if (type === 'comment')
-        return await like.RemoveLikeFromComment.mutateAsync(id)
+        return await like.removeLikeFromComment.mutateAsync(id)
     },
     [type, like]
   )
