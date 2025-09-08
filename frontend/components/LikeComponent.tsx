@@ -72,7 +72,7 @@ function LikeComponent({ type, content }: Props) {
         <Octicons
           name="thumbsup"
           size={14}
-          color="#8a8a8aff"
+          color={isLikedByUser ? '#da627d' : '#8a8a8aff'}
           style={{ marginRight: 4 }}
         />
       </Pressable>
