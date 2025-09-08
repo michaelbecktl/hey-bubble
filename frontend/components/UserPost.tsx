@@ -6,6 +6,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome'
 import Octicons from '@expo/vector-icons/Octicons'
 import ProfilePhoto from './ProfilePhoto'
 import { RelativeTime } from './RelativeTime'
+import LikeComponent from './LikeComponent'
 
 type Props = {
   post: Post
@@ -44,16 +45,7 @@ function UserPost({ post, commentsVisible }: Props) {
       <View>{/* To be replaced with media URL */}</View>
       <View style={styles.footer}>
         <View style={styles.footerComponents}>
-          <Octicons
-            name="thumbsup"
-            size={14}
-            color="#8a8a8aff"
-            style={{ marginRight: 4 }}
-          />
-          <AppText
-            text={post.likeCount ? post.likeCount.toString() : '0'}
-            type="sub"
-          />
+          <LikeComponent type="post" content={post} />
         </View>
         <Pressable
           onPress={

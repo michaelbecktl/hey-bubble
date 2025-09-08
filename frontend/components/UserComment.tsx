@@ -4,6 +4,7 @@ import AppText from './AppText'
 import { FontAwesome, Octicons } from '@expo/vector-icons'
 import ProfilePhoto from './ProfilePhoto'
 import { RelativeTime } from './RelativeTime'
+import LikeComponent from './LikeComponent'
 
 type Props = {
   comment: PostComment
@@ -27,16 +28,7 @@ function UserComment({ comment }: Props) {
             </View>
             <View style={styles.footer}>
               <View style={styles.footerComponents}>
-                <Octicons
-                  name="thumbsup"
-                  size={14}
-                  color="#8a8a8aff"
-                  style={{ marginRight: 4 }}
-                />
-                <AppText
-                  text={comment.likeCount ? comment.likeCount.toString() : '0'}
-                  type="sub"
-                />
+                <LikeComponent type="comment" content={comment} />
               </View>
               <View style={styles.footerComponents}>
                 <RelativeTime

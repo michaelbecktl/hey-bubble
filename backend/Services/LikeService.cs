@@ -53,6 +53,7 @@ public class LikeService(AppDbContext context) : ILikeService
 
     var post = await context.Posts.Where(p => p.PostId == postId).FirstOrDefaultAsync();
     if (post != null && deletedLike > 0) post.LikeCount--;
+    await context.SaveChangesAsync();
 
     return deletedLike > 0;
   }
@@ -65,6 +66,7 @@ public class LikeService(AppDbContext context) : ILikeService
 
     var comment = await context.Comments.Where(p => p.CommentId == commentId).FirstOrDefaultAsync();
     if (comment != null && deletedLike > 0) comment.LikeCount--;
+    await context.SaveChangesAsync();
 
     return deletedLike > 0;
   }
