@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250903230144_UpdatedCommentEntity")]
-    partial class UpdatedCommentEntity
+    [Migration("20250909222100_PostAndCommentLikes")]
+    partial class PostAndCommentLikes
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -108,7 +108,7 @@ namespace backend.Migrations
                         },
                         new
                         {
-                            CommentId = 1,
+                            CommentId = 2,
                             UserId = -3
                         });
                 });
@@ -189,12 +189,12 @@ namespace backend.Migrations
                         new
                         {
                             PostId = 1,
-                            UserId = -1
+                            UserId = -2
                         },
                         new
                         {
-                            PostId = 2,
-                            UserId = -1
+                            PostId = 1,
+                            UserId = -3
                         });
                 });
 

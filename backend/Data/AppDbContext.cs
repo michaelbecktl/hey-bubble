@@ -179,12 +179,12 @@ public class AppDbContext : DbContext
       new PostLike
       {
         PostId = 1,
-        UserId = -1
+        UserId = -2
       },
       new PostLike
       {
-        PostId = 2,
-        UserId = -1
+        PostId = 1,
+        UserId = -3
       }
     };
 
@@ -211,7 +211,7 @@ public class AppDbContext : DbContext
       },
       new CommentLike
       {
-        CommentId = 1,
+        CommentId = 2,
         UserId = -3
       }
     };
