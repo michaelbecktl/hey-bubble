@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 public class LikeService(AppDbContext context) : ILikeService
 {
 
-  public async Task<PostLike> AddLikeToPost(int userId, int postId)
+  public async Task<PostLikeDTO> AddLikeToPost(int userId, int postId)
   {
     var newLike = new PostLike
     {
@@ -23,10 +23,14 @@ public class LikeService(AppDbContext context) : ILikeService
 
     await context.SaveChangesAsync();
 
-    return newLike;
+    return new PostLikeDTO
+    {
+      PostId = newLike.PostId,
+      UserId = newLike.UserId  
+    };
   }
 
-  public async Task<CommentLike> AddLikeToComment(int userId, int commentId)
+  public async Task<CommentLikeDTO> AddLikeToComment(int userId, int commentId)
   {
     var newLike = new CommentLike
     {
@@ -42,7 +46,11 @@ public class LikeService(AppDbContext context) : ILikeService
     context.CommentLikes.Add(newLike);
     await context.SaveChangesAsync();
 
-    return newLike;
+    return new CommentLikeDTO
+    {
+      CommentId = newLike.CommentId,
+      UserId = newLike.UserId  
+    };
   }
 
   public async Task<bool> DeleteLikeFromPost(int userId, int postId)

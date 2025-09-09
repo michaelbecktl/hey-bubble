@@ -67,3 +67,17 @@ public class UpdateCommentDTO
   public required string Content { get; set; }
 
 }
+
+public class PostLikeDTO
+{
+  public int PostId { get; set; }
+
+  public int UserId { get; set; }
+}
+
+public class CommentLikeDTO
+{
+    public int CommentId { get; set; }
+
+    public int UserId { get; set; }
+}
