@@ -1,9 +1,10 @@
-import { Text, View } from 'react-native'
+import NewsFeed from '@/components/page-components/NewsFeed'
+import { View } from 'react-native'
 
 export default function Home() {
   return (
     <View>
-      <Text>Home</Text>
+      <NewsFeed />
     </View>
   )
 }

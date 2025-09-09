@@ -1,6 +1,6 @@
 import { Modal, View, Text, StyleSheet } from 'react-native'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
-import BadgeButton from './BadgeButton'
+import BadgeButton from '@/components//BadgeButton'
 
 type Props = {
   modalVisible: boolean

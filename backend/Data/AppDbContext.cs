@@ -127,6 +127,7 @@ public class AppDbContext : DbContext
         UserId = -3,
         Content = "Hi!",
         CreatedAt = new DateTime (2025, 8, 20, 10, 9, 0),
+        UpdatedAt = null,
         LikeCount = 1,
       },
       new Comment
@@ -136,6 +137,7 @@ public class AppDbContext : DbContext
         UserId = -2,
         Content = "Hey there!",
         CreatedAt = new DateTime (2025, 8, 20, 10, 16, 0),
+        UpdatedAt = null,
         LikeCount = 1,
       }
     };
@@ -177,12 +179,12 @@ public class AppDbContext : DbContext
       new PostLike
       {
         PostId = 1,
-        UserId = -1
+        UserId = -2
       },
       new PostLike
       {
-        PostId = 2,
-        UserId = -1
+        PostId = 1,
+        UserId = -3
       }
     };
 
@@ -209,7 +211,7 @@ public class AppDbContext : DbContext
       },
       new CommentLike
       {
-        CommentId = 1,
+        CommentId = 2,
         UserId = -3
       }
     };
