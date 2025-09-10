@@ -1,3 +1,4 @@
+import { Colors } from '@/constants/Colors'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 type Props = {
@@ -42,11 +43,11 @@ const styles = StyleSheet.create({
     height: 45,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#DA627D',
+    backgroundColor: Colors.secondary,
   },
   largeButton: { width: 200, height: 64, padding: 16 },
   text: {
-    color: '#FCF7FA',
+    color: Colors.background,
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -54,9 +55,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   activeButton: {
-    backgroundColor: '#D44976',
+    backgroundColor: Colors.activeSecondary,
   },
   activeText: {
-    color: '#F9F0F6',
+    color: Colors.themeBackground,
   },
 })

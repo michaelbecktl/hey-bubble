@@ -4,6 +4,7 @@ import LoginPopup from '../components/auth-components/LoginPopup'
 import { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import RegisterSuccessfully from '@/components/auth-components/RegisterSuccessfully'
+import { Colors } from '@/constants/Colors'
 
 export default function LoginScreen() {
   const [loginVisible, setLoginVisible] = useState<boolean>(false)
@@ -56,18 +57,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F1EBFA',
+    backgroundColor: Colors.themeBackground,
   },
   title: {
     fontSize: 48,
     fontWeight: 'bold',
-    color: '#0D0628',
+    color: Colors.text,
     marginBottom: 24,
   },
   textField: {
     width: 250,
     height: 40,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.textfield,
     borderRadius: 5,
     marginTop: 5,
     marginBottom: 20,

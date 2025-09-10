@@ -2,6 +2,7 @@ import { View, StyleSheet } from 'react-native'
 import UserPost from '../UserPost'
 import { usePost } from '@/client/hooks/post'
 import { Post } from '@/models/models'
+import { Colors } from '@/constants/Colors'
 
 function NewsFeed() {
   const postQuery = usePost()
@@ -23,7 +24,7 @@ function NewsFeed() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#F1EBFA',
+    backgroundColor: Colors.themeBackground,
   },
 })
 

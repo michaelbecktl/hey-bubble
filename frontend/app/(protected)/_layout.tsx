@@ -1,7 +1,7 @@
 import { AuthContext } from '@/utils/AuthContext'
 import { Redirect, Stack } from 'expo-router'
 import { useContext } from 'react'
-import PostFocused from './pages/postfocused'
+import { Colors } from '@/constants/Colors'
 
 export default function ProtectedLayout() {
   const authState = useContext(AuthContext)
@@ -23,9 +23,9 @@ export default function ProtectedLayout() {
           title: 'Post',
           presentation: 'card',
           headerStyle: {
-            backgroundColor: '#F1EBFA',
+            backgroundColor: Colors.themeBackground,
           },
-          headerTintColor: '#DA627D',
+          headerTintColor: Colors.secondary,
         }}
       />
       <Stack.Screen name="+not-found" />

@@ -5,6 +5,7 @@ import { FontAwesome, Octicons } from '@expo/vector-icons'
 import ProfilePhoto from './ProfilePhoto'
 import { RelativeTime } from './RelativeTime'
 import LikeComponent from './LikeComponent'
+import { Colors } from '@/constants/Colors'
 
 type Props = {
   comment: PostComment
@@ -50,7 +51,7 @@ function UserComment({ comment }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fcf7fa',
+    backgroundColor: Colors.background,
     marginBottom: 1,
     padding: 10,
   },
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
   chatBubble: {
     paddingHorizontal: 10,
     paddingVertical: 5,
-    backgroundColor: '#f1ebfa',
+    backgroundColor: Colors.themeBackground,
     marginRight: 15,
     borderRadius: 15,
     alignSelf: 'flex-start',
