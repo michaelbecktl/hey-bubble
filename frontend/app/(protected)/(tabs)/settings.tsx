@@ -1,4 +1,5 @@
 import AppButton from '@/components/AppButton'
+import { Colors } from '@/constants/Colors'
 import { AuthContext } from '@/utils/AuthContext'
 import { useContext } from 'react'
 import { StyleSheet, View } from 'react-native'
@@ -20,6 +21,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    color: '#0D0628',
+    color: Colors.text,
   },
 })

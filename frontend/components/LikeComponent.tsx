@@ -4,6 +4,7 @@ import AppText from './AppText'
 import { useCallback, useMemo, useState } from 'react'
 import { Pressable } from 'react-native'
 import { useLike } from '@/client/hooks/like'
+import { Colors } from '@/constants/Colors'
 
 type Props = {
   type: 'post' | 'comment'
@@ -72,7 +73,7 @@ function LikeComponent({ type, content }: Props) {
         <Octicons
           name="thumbsup"
           size={14}
-          color={isLikedByUser ? '#da627d' : '#8a8a8aff'}
+          color={isLikedByUser ? Colors.secondary : Colors.subText}
           style={{ marginRight: 4 }}
         />
       </Pressable>

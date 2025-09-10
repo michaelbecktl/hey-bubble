@@ -5,6 +5,7 @@ import { AuthContext } from '@/utils/AuthContext'
 import { useContext, useState } from 'react'
 import { Modal, StyleSheet, Text, TextInput, View } from 'react-native'
 import BadgeButton from '@/components/BadgeButton'
+import { Colors } from '@/constants/Colors'
 
 type Props = {
   modalVisible: boolean
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
   textField: {
     width: 250,
     height: 40,
-    backgroundColor: '#f5f5f5ff',
+    backgroundColor: Colors.textfield,
     borderRadius: 5,
     marginTop: 5,
     marginBottom: 20,
@@ -110,6 +111,6 @@ const styles = StyleSheet.create({
   },
   error: {
     margin: 5,
-    color: '#ff0000ff',
+    color: Colors.errorText,
   },
 })

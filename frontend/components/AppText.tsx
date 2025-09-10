@@ -1,3 +1,4 @@
+import { Colors } from '@/constants/Colors'
 import { Text, StyleSheet } from 'react-native'
 
 type Props = {
@@ -12,12 +13,12 @@ function AppText({ text, type }: Props) {
 const styles = StyleSheet.create({
   text: {
     display: 'flex',
-    color: '#0D0628',
+    color: Colors.text,
   },
   basic: {},
   poster: { fontWeight: '600' },
   sub: {
-    color: '#8a8a8aff',
+    color: Colors.subText,
     fontSize: 12,
   },
 })

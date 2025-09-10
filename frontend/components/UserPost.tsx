@@ -3,10 +3,10 @@ import { router } from 'expo-router'
 import { View, StyleSheet, Pressable } from 'react-native'
 import AppText from './AppText'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
-import Octicons from '@expo/vector-icons/Octicons'
 import ProfilePhoto from './ProfilePhoto'
 import { RelativeTime } from './RelativeTime'
 import LikeComponent from './LikeComponent'
+import { Colors } from '@/constants/Colors'
 
 type Props = {
   post: Post
@@ -72,7 +72,7 @@ function UserPost({ post, commentsVisible }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fcf7fa',
+    backgroundColor: Colors.background,
     marginBottom: 1,
     padding: 10,
   },
