@@ -26,7 +26,7 @@ function UserPost({ post, commentsVisible }: Props) {
       <View>
         <View style={styles.header}>
           <View style={styles.photo}>
-            <ProfilePhoto source={null} type="post" />
+            <ProfilePhoto source={null} type="small" />
           </View>
           <View style={styles.user}>
             <AppText text={post.displayName} type="poster" />

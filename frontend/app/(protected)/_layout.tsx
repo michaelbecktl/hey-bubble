@@ -28,6 +28,17 @@ export default function ProtectedLayout() {
           headerTintColor: Colors.secondary,
         }}
       />
+      <Stack.Screen
+        name="pages/createpost"
+        options={{
+          title: 'Create Post',
+          presentation: 'card',
+          headerStyle: {
+            backgroundColor: Colors.themeBackground,
+          },
+          headerTintColor: Colors.secondary,
+        }}
+      />
       <Stack.Screen name="+not-found" />
     </Stack>
   )

@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native'
 
 interface Props {
   source?: string | null
-  type: 'post'
+  type: 'small'
 }
 
 function ProfilePhoto({ source, type }: Props) {
@@ -13,7 +13,7 @@ function ProfilePhoto({ source, type }: Props) {
 }
 
 const styles = StyleSheet.create({
-  post: {
+  small: {
     width: 32,
     height: 32,
     borderRadius: '50%',
