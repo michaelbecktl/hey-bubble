@@ -20,3 +20,31 @@ export async function RegisterUser(userDetails: UserCredentials) {
     throw error
   }
 }
+
+export async function GetCurrentUserProfile({
+  token,
+}: {
+  token: string | null
+}) {
+  try {
+    const response = await request.get(`${rootURL}/profile/current`)
+    return response.body
+  } catch (error: any) {
+    throw error
+  }
+}
+
+export async function GetUserProfileById({
+  token,
+  userId,
+}: {
+  token: string | null
+  userId: number
+}) {
+  try {
+    const response = await request.get(`${rootURL}/profile/${userId}`)
+    return response.body
+  } catch (error: any) {
+    throw error
+  }
+}

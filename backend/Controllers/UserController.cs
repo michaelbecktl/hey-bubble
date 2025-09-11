@@ -55,7 +55,7 @@ public class UserController : ControllerBase
   [HttpGet("profile/{id}")]
   public async Task<ActionResult<UserProfileDTO>> GetUserProfile(string id)
   {
-    var userId = id == "user" ? RetrieveUserId() : int.Parse(id);
+    var userId = id == "current" ? RetrieveUserId() : int.Parse(id);
 
     var user = await _context.UserProfiles
     .Where(up => up.UserId == userId)
