@@ -38,6 +38,7 @@ public class UserController : ControllerBase
   .Select(user => new UserDTO { Id = user.Id, Username = user.Username, Email = user.Email })
   .ToListAsync();
 
+  [Authorize]
   [HttpGet("{id}")]
   public async Task<ActionResult<UserDTO>> GetSpecificUser(int id)
   {
@@ -50,7 +51,8 @@ public class UserController : ControllerBase
     return user;
   }
 
-    [HttpGet("profile/{id}")]
+  [Authorize]
+  [HttpGet("profile/{id}")]
   public async Task<ActionResult<UserProfileDTO>> GetUserProfile(string id)
   {
     var userId = id == "user" ? RetrieveUserId() : int.Parse(id);
