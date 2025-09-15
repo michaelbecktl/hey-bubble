@@ -26,6 +26,7 @@ function CreatePost() {
             value={text}
             onChangeText={onChangeText}
             multiline={true}
+            autoFocus={true}
           />
         </View>
       </View>
