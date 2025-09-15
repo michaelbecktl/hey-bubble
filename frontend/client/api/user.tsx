@@ -27,7 +27,9 @@ export async function GetCurrentUserProfile({
   token: string | null
 }) {
   try {
-    const response = await request.get(`${rootURL}/profile/current`)
+    const response = await request
+      .get(`${rootURL}/profile/current`)
+      .set('Authorization', `Bearer ${token}`)
     return response.body
   } catch (error: any) {
     throw error
@@ -42,7 +44,9 @@ export async function GetUserProfileById({
   userId: number
 }) {
   try {
-    const response = await request.get(`${rootURL}/profile/${userId}`)
+    const response = await request
+      .get(`${rootURL}/profile/${userId}`)
+      .set('Authorization', `Bearer ${token}`)
     return response.body
   } catch (error: any) {
     throw error

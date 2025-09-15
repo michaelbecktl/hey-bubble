@@ -1,23 +1,21 @@
 import { usePost } from '@/client/hooks/post'
-import { useUser } from '@/client/hooks/user'
-import ProfilePhoto from '@/components/ProfilePhoto'
 import { Colors } from '@/constants/Colors'
 import { UserProfile } from '@/models/models'
+import { StyleSheet, View, TextInput } from 'react-native'
+import ProfilePhoto from './ProfilePhoto'
 import { useState } from 'react'
-import { TextInput, StyleSheet, View } from 'react-native'
 
-function CreatePost() {
-  const queryPosts = usePost()
-  const user = useUser()
+type Props = {
+  user: UserProfile
+}
+
+function CreatePostBar({ user }: Props) {
   const [text, onChangeText] = useState('')
-
-  if (queryPosts.isPending || user.isPending) return
-
   return (
     <>
       <View style={styles.container}>
         <View style={styles.photo}>
-          <ProfilePhoto source={user.data.profilePhoto} type="small" />
+          <ProfilePhoto source={user.profilePhoto} type="small" />
         </View>
         <View style={styles.textContainer}>
           <TextInput
@@ -58,4 +56,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default CreatePost
+export default CreatePostBar

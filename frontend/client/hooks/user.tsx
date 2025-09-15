@@ -15,11 +15,11 @@ export function useUser() {
   return {
     ...query,
     useSelectedUserProfile: (userId: number) =>
-      useSelectedUserProfile({ token, userId }),
+      useUserProfile({ token, userId }),
   }
 }
 
-export function useSelectedUserProfile({
+export function useUserProfile({
   token,
   userId,
 }: {
