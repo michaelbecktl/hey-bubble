@@ -15,12 +15,12 @@ export function usePost() {
 
   const query = useQuery({
     queryKey: ['publicPosts'],
-    queryFn: () => API.GetPublicPosts({ token: authState.token }),
+    queryFn: () => API.GetPublicPosts({ token: token }),
   })
 
   return {
     ...query,
-    useCreatePost: (content: PostDTO) => useCreatePost({ token, content }),
+    useCreatePost: useCreatePost({ token }),
   }
 }
 
@@ -36,12 +36,8 @@ export function usePostMutation<TData = unknown, TVariables = unknown>(
   })
 }
 
-export function useCreatePost({
-  token,
-  content,
-}: {
-  token: string | null
-  content: PostDTO
-}) {
-  return usePostMutation(() => API.CreatePosts({ token, content }))
+export function useCreatePost({ token }: { token: string | null }) {
+  return usePostMutation((content: PostDTO) =>
+    API.CreatePosts({ token, content })
+  )
 }

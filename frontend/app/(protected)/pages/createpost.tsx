@@ -4,8 +4,8 @@ import AppButton from '@/components/AppButton'
 import AppText from '@/components/AppText'
 import ProfilePhoto from '@/components/ProfilePhoto'
 import { Colors } from '@/constants/Colors'
-import { useNavigation } from 'expo-router'
-import { useLayoutEffect, useState } from 'react'
+import { useNavigation, router } from 'expo-router'
+import { useState } from 'react'
 import { TextInput, StyleSheet, View } from 'react-native'
 
 function CreatePost() {
@@ -14,17 +14,16 @@ function CreatePost() {
   const [text, onChangeText] = useState('')
   const navigation = useNavigation()
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <AppButton label="Post" size="small" onPress={handlePost} />
-      ),
-    })
-  }, [navigation])
-
   async function handlePost() {
-    return
+    await queryPosts.useCreatePost.mutateAsync({ content: text })
+    router.replace('/')
   }
+
+  navigation.setOptions({
+    headerRight: () => (
+      <AppButton label="Post" size="small" onPress={handlePost} />
+    ),
+  })
 
   if (queryPosts.isPending || user.isPending) return
 
