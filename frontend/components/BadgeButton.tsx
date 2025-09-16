@@ -6,6 +6,7 @@ type Props = {
   position?: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'
   type?: 'x' | 'plus' | 'send' | 'phone' | 'search'
   margin?: number
+  size?: number
   onPress: () => void
 }
 
@@ -13,6 +14,7 @@ export default function ExitButton({
   position = 'topLeft',
   type = 'x',
   margin = 0,
+  size = 24,
   onPress,
 }: Props) {
   const iconColor = Colors.secondary,
@@ -27,7 +29,7 @@ export default function ExitButton({
         {(pressed) => (
           <Feather
             name={type}
-            size={24}
+            size={size}
             color={pressed ? activeIconColor : iconColor}
           />
         )}
