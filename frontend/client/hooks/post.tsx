@@ -7,16 +7,21 @@ import {
 import * as API from '../api/post'
 import { useContext } from 'react'
 import { AuthContext } from '@/utils/AuthContext'
+import { PostDTO } from '@/models/models'
 
 export function usePost() {
   const authState = useContext(AuthContext)
+  const token = authState.token
 
   const query = useQuery({
     queryKey: ['publicPosts'],
-    queryFn: () => API.GetPublicPosts({ token: authState.token }),
+    queryFn: () => API.GetPublicPosts({ token: token }),
   })
 
-  return { ...query }
+  return {
+    ...query,
+    useCreatePost: useCreatePost({ token }),
+  }
 }
 
 export function usePostMutation<TData = unknown, TVariables = unknown>(
@@ -29,4 +34,10 @@ export function usePostMutation<TData = unknown, TVariables = unknown>(
       queryClient.invalidateQueries({ queryKey: ['publicPosts'] })
     },
   })
+}
+
+export function useCreatePost({ token }: { token: string | null }) {
+  return usePostMutation((content: PostDTO) =>
+    API.CreatePosts({ token, content })
+  )
 }

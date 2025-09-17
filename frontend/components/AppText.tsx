@@ -3,10 +3,10 @@ import { Text, StyleSheet } from 'react-native'
 
 type Props = {
   text: string
-  type: 'basic' | 'poster' | 'sub'
+  type?: 'basic' | 'poster' | 'sub'
 }
 
-function AppText({ text, type }: Props) {
+function AppText({ text, type = 'basic' }: Props) {
   return <Text style={[styles.text, styles[type]]}>{text}</Text>
 }
 

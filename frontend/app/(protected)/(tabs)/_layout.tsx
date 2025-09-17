@@ -31,6 +31,7 @@ export default function TabsLayout() {
           ),
         }}
       />
+
       <Tabs.Screen
         name="about"
         options={{
@@ -51,7 +52,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="settings"
         options={{
-          title: 'Settings',
+          title: 'Settings ',
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
               name={focused ? 'settings-sharp' : 'settings-outline'}

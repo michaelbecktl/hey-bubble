@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Backend.Entity;
 using Backend.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -16,6 +17,12 @@ public class UserController : ControllerBase
     _userService = userService;
   }
 
+  public int RetrieveUserId()
+  {
+    var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+    return int.Parse(userIdString);
+  }
+
   public class UserLogin
   {
     public required string Username { get; set; }
@@ -26,17 +33,44 @@ public class UserController : ControllerBase
   [Authorize]
   [HttpGet]
 
-  public async Task<IEnumerable<UserDTO>> Get() =>
+  public async Task<IEnumerable<UserDTO>> GetUsers() =>
   await _context.Users
   .Select(user => new UserDTO { Id = user.Id, Username = user.Username, Email = user.Email })
   .ToListAsync();
 
+  [Authorize]
   [HttpGet("{id}")]
-  public async Task<ActionResult<UserDTO>> Get(int id)
+  public async Task<ActionResult<UserDTO>> GetSpecificUser(int id)
   {
     var user = await _context.Users
     .Where(user => user.Id == id)
     .Select(user => new UserDTO { Id = user.Id, Username = user.Username, Email = user.Email })
+    .FirstOrDefaultAsync();
+
+    if (user == null) return NotFound();
+    return user;
+  }
+
+  [Authorize]
+  [HttpGet("profile/{id}")]
+  public async Task<ActionResult<UserProfileDTO>> GetUserProfile(string id)
+  {
+    var userId = id == "current" ? RetrieveUserId() : int.Parse(id);
+
+    var user = await _context.UserProfiles
+    .Where(up => up.UserId == userId)
+    .Select(up => new UserProfileDTO
+    {
+      UserId = up.UserId,
+      DisplayName = up.DisplayName,
+      Dob = up.Dob,
+      ProfilePhoto = up.ProfilePhoto,
+      Gender = up.Gender,
+      Country = up.Country,
+      NativeLanguage = up.NativeLanguage,
+      LearningLanguage = up.LearningLanguage,
+      Following = up.Following,
+      Followers = up.Followers })
     .FirstOrDefaultAsync();
 
     if (user == null) return NotFound();

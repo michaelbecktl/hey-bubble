@@ -17,7 +17,7 @@ function UserComment({ comment }: Props) {
       <View>
         <View style={styles.header}>
           <View style={styles.photo}>
-            <ProfilePhoto source={null} type="post" />
+            <ProfilePhoto source={null} type="medium" />
           </View>
           <View style={styles.body}>
             <View style={styles.chatBubble}>

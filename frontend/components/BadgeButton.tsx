@@ -5,19 +5,23 @@ import { Colors } from '@/constants/Colors'
 type Props = {
   position?: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'
   type?: 'x' | 'plus' | 'send' | 'phone' | 'search'
+  margin?: number
+  size?: number
   onPress: () => void
 }
 
 export default function ExitButton({
   position = 'topLeft',
   type = 'x',
+  margin = 0,
+  size = 24,
   onPress,
 }: Props) {
   const iconColor = Colors.secondary,
     activeIconColor = Colors.activeSecondary
 
   return (
-    <View style={[styles.container, styles[position]]}>
+    <View style={[styles.container, styles[position], { margin: margin }]}>
       <Pressable
         onPress={onPress}
         style={({ pressed }) => [styles.button, pressed && styles.activeButton]}
@@ -25,7 +29,7 @@ export default function ExitButton({
         {(pressed) => (
           <Feather
             name={type}
-            size={24}
+            size={size}
             color={pressed ? activeIconColor : iconColor}
           />
         )}

@@ -1,9 +1,31 @@
-  public class UserDTO
-  {
-    public int Id { get; set; }
-    public required string Username { get; set; }
-    public required string Email { get; set; }
-  }
+public class UserDTO
+{
+  public int Id { get; set; }
+  public required string Username { get; set; }
+  public required string Email { get; set; }
+}
+
+public class UserProfileDTO
+{
+  public int UserId { get; set; }
+  public required string DisplayName { get; set; }
+
+  public DateOnly Dob { get; set; }
+
+  public string? ProfilePhoto { get; set; }
+
+  public required string Gender { get; set; }
+
+  public required string Country { get; set; }
+
+  public required string NativeLanguage { get; set; }
+
+  public required string LearningLanguage { get; set; }
+
+  public required int Following { get; set; }
+
+  public required int Followers { get; set; }
+}
 
 public class PostDTO
 {

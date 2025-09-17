@@ -27,14 +27,14 @@ public class AppDbContext : DbContext
       },
       new User
       {
-        Id = -3,
+        Id = -2,
         Username = "aliceuser",
         Password = "$2a$11$fzXCnjrZ3KKnm3nI1nbdm.XQjaF3x/mXUIcmWMe3r2dMjBsSuRQ7u",
         Email = "alice@heybubble.co.nz",
       },
       new User
       {
-        Id = -2,
+        Id = -3,
         Username = "hanauser",
         Password = "$2a$12$kMngNi/lnbyCxnixyC7Swuq99AWEvm9YGk8M.y9uneD49W3wJqvWm",
         Email = "hana@heybubble.co.nz",
