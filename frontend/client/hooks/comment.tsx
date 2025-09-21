@@ -7,6 +7,7 @@ import {
 import * as API from '../api/comment'
 import { useContext } from 'react'
 import { AuthContext } from '@/utils/AuthContext'
+import { CommentDTO } from '@/models/models'
 
 export function useComment(postId: number) {
   const authState = useContext(AuthContext)
@@ -17,7 +18,7 @@ export function useComment(postId: number) {
     queryFn: () => API.GetCommentsFromPost({ token, postId }),
   })
 
-  return { ...query }
+  return { ...query, useCreateComment: useCreateComment({ token }) }
 }
 
 export function useCommentMutation<TData = unknown, TVariables = unknown>(
@@ -30,4 +31,10 @@ export function useCommentMutation<TData = unknown, TVariables = unknown>(
       queryClient.invalidateQueries({ queryKey: ['comment'] })
     },
   })
+}
+
+export function useCreateComment({ token }: { token: string | null }) {
+  return useCommentMutation((content: CommentDTO) =>
+    API.CreateComment({ token, content })
+  )
 }
