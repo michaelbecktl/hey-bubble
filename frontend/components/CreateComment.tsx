@@ -31,10 +31,7 @@ function CreateComment({ postId, autoFocus }: Props) {
       mediaUrl: null,
     }
     await comment.useCreateComment.mutateAsync(content)
-    router.push({
-      pathname: '/(protected)/pages/postfocused',
-      params: { postId: postId },
-    })
+    onChangeText('')
   }
 
   return (
