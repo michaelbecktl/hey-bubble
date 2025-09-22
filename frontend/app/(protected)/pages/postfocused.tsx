@@ -1,5 +1,6 @@
 import { useComment } from '@/client/hooks/comment'
 import { usePost } from '@/client/hooks/post'
+import CreateComment from '@/components/CreateComment'
 import UserComment from '@/components/UserComment'
 import UserPost from '@/components/UserPost'
 import { Post, PostComment } from '@/models/models'
@@ -27,6 +28,7 @@ function PostFocused() {
       {comments.map((comment: PostComment) => (
         <UserComment comment={comment} key={comment.commentId} />
       ))}
+      <CreateComment autoFocus={false} />
     </>
   )
 }

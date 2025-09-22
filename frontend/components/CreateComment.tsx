@@ -4,19 +4,25 @@ import { StyleSheet, View, TextInput } from 'react-native'
 import ProfilePhoto from './ProfilePhoto'
 import { useState } from 'react'
 import BadgeButton from './BadgeButton'
+import { useUser } from '@/client/hooks/user'
 
 type Props = {
-  user: UserProfile
   autoFocus: boolean
 }
 
-function CreateComment({ user, autoFocus }: Props) {
+function CreateComment({ autoFocus }: Props) {
   const [text, onChangeText] = useState('')
+  const user = useUser()
+
+  if (user.isPending) return
+
+  const currentUser = user.data
+
   return (
     <>
       <View style={styles.container}>
         <View style={styles.photo}>
-          <ProfilePhoto source={user.profilePhoto} type="small" />
+          <ProfilePhoto source={currentUser.profilePhoto} type="small" />
         </View>
         <View style={styles.textContainer}>
           <TextInput
@@ -28,8 +34,14 @@ function CreateComment({ user, autoFocus }: Props) {
             autoFocus={autoFocus}
           />
         </View>
-        <View>
-          <BadgeButton position="topRight" type="send" onPress={() => {}} />
+        <View style={styles.buttonContainer}>
+          <BadgeButton
+            position="topRight"
+            size={20}
+            borderless={true}
+            type="send"
+            onPress={() => {}}
+          />
         </View>
       </View>
     </>
@@ -47,14 +59,15 @@ const styles = StyleSheet.create({
   },
   photo: { marginRight: 10 },
   textContainer: {
-    marginVertical: 5,
     flexGrow: 5,
   },
+  buttonContainer: { marginTop: 5 },
   textField: {
     fontSize: 13,
     color: Colors.text,
     borderRadius: 5,
-    flexGrow: 5,
+    height: 32,
+    marginVertical: 5,
   },
   placeholder: {
     color: Colors.subText,

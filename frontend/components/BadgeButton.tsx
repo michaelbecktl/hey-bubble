@@ -7,6 +7,7 @@ type Props = {
   type?: 'x' | 'plus' | 'send' | 'phone' | 'search'
   margin?: number
   size?: number
+  borderless?: boolean
   onPress: () => void
 }
 
@@ -15,6 +16,7 @@ export default function ExitButton({
   type = 'x',
   margin = 0,
   size = 24,
+  borderless = false,
   onPress,
 }: Props) {
   const iconColor = Colors.secondary,
@@ -24,7 +26,9 @@ export default function ExitButton({
     <View style={[styles.container, styles[position], { margin: margin }]}>
       <Pressable
         onPress={onPress}
-        style={({ pressed }) => [styles.button, pressed && styles.activeButton]}
+        style={({ pressed }) =>
+          borderless ? [] : [styles.button, pressed && styles.activeButton]
+        }
       >
         {(pressed) => (
           <Feather
