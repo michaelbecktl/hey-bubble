@@ -29,8 +29,12 @@ public class CommentService(AppDbContext context) : ICommentService
     return comments;
   }
 
-  public async Task<Comment> CreateNewCommentAsync(int userId, NewCommentDTO request)
+  public async Task<CommentDTO> CreateNewCommentAsync(int userId, NewCommentDTO request)
   {
+    var post = await context.Posts
+      .Where(p => p.PostId == request.PostId)
+      .FirstOrDefaultAsync();
+
     var newComment = new Comment
     {
       UserId = userId,
@@ -42,9 +46,19 @@ public class CommentService(AppDbContext context) : ICommentService
     };
 
     context.Comments.Add(newComment);
+    if (post != null) post.CommentCount++;
+    
     await context.SaveChangesAsync();
 
-    return newComment;
+    return new CommentDTO
+    {
+      PostId = newComment.PostId,
+      UserId = newComment.UserId,
+      Content = newComment.Content,
+      CreatedAt = newComment.CreatedAt,
+      MediaUrl = newComment.MediaUrl,
+      MediaType = newComment.MediaType,
+    };
   }
 
   public async Task<Comment?> UpdateCommentAsync(int userId, int commentId, UpdateCommentDTO request)

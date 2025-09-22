@@ -14,7 +14,7 @@ export function usePost() {
   const token = authState.token
 
   const query = useQuery({
-    queryKey: ['publicPosts'],
+    queryKey: ['posts'],
     queryFn: () => API.GetPublicPosts({ token: token }),
   })
 
@@ -31,7 +31,7 @@ export function usePostMutation<TData = unknown, TVariables = unknown>(
   return useMutation({
     mutationFn,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['publicPosts'] })
+      queryClient.invalidateQueries({ queryKey: ['posts'] })
     },
   })
 }

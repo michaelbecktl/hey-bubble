@@ -1,22 +1,41 @@
 import { Colors } from '@/constants/Colors'
-import { UserProfile } from '@/models/models'
+import { CommentDTO, UserProfile } from '@/models/models'
 import { StyleSheet, View, TextInput } from 'react-native'
 import ProfilePhoto from './ProfilePhoto'
 import { useState } from 'react'
 import BadgeButton from './BadgeButton'
 import { useUser } from '@/client/hooks/user'
+import { useComment } from '@/client/hooks/comment'
+import { router } from 'expo-router'
 
 type Props = {
+  postId: number
   autoFocus: boolean
 }
 
-function CreateComment({ autoFocus }: Props) {
+function CreateComment({ postId, autoFocus }: Props) {
   const [text, onChangeText] = useState('')
   const user = useUser()
+  const comment = useComment(postId)
 
-  if (user.isPending) return
+  if (user.isPending || comment.isPending) return
 
   const currentUser = user.data
+
+  async function handleComment() {
+    if (text === '') return
+    const content: CommentDTO = {
+      postId: postId,
+      content: text,
+      mediaType: null,
+      mediaUrl: null,
+    }
+    await comment.useCreateComment.mutateAsync(content)
+    router.push({
+      pathname: '/(protected)/pages/postfocused',
+      params: { postId: postId },
+    })
+  }
 
   return (
     <>
@@ -40,7 +59,7 @@ function CreateComment({ autoFocus }: Props) {
             size={20}
             borderless={true}
             type="send"
-            onPress={() => {}}
+            onPress={handleComment}
           />
         </View>
       </View>
@@ -61,7 +80,7 @@ const styles = StyleSheet.create({
   textContainer: {
     flexGrow: 5,
   },
-  buttonContainer: { marginTop: 5 },
+  buttonContainer: { marginTop: 5, marginRight: 5 },
   textField: {
     fontSize: 13,
     color: Colors.text,

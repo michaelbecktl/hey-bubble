@@ -28,7 +28,7 @@ function PostFocused() {
       {comments.map((comment: PostComment) => (
         <UserComment comment={comment} key={comment.commentId} />
       ))}
-      <CreateComment autoFocus={false} />
+      <CreateComment autoFocus={false} postId={postId} />
     </>
   )
 }

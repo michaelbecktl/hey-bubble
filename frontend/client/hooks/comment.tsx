@@ -28,7 +28,7 @@ export function useCommentMutation<TData = unknown, TVariables = unknown>(
   return useMutation({
     mutationFn,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['comment'] })
+      queryClient.invalidateQueries({ queryKey: ['comments', 'posts'] })
     },
   })
 }

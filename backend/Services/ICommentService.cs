@@ -6,7 +6,7 @@ namespace Backend.Services
   {
     Task<IEnumerable<CommentDTO>> GetCommentByPostIdAsync(int userId, int postId);
 
-    Task<Comment> CreateNewCommentAsync(int userId, NewCommentDTO request);
+    Task<CommentDTO> CreateNewCommentAsync(int userId, NewCommentDTO request);
 
     Task<Comment?> UpdateCommentAsync(int userId, int commentId, UpdateCommentDTO request);
 
