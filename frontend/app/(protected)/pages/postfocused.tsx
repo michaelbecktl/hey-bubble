@@ -5,6 +5,8 @@ import UserComment from '@/components/UserComment'
 import UserPost from '@/components/UserPost'
 import { Post, PostComment } from '@/models/models'
 import { useLocalSearchParams } from 'expo-router'
+import { ScrollView, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 function PostFocused() {
   const params = useLocalSearchParams()
@@ -24,10 +26,12 @@ function PostFocused() {
 
   return (
     <>
-      <UserPost post={selectedPost} commentsVisible={true} />
-      {comments.map((comment: PostComment) => (
-        <UserComment comment={comment} key={comment.commentId} />
-      ))}
+      <ScrollView>
+        <UserPost post={selectedPost} commentsVisible={true} />
+        {comments.map((comment: PostComment) => (
+          <UserComment comment={comment} key={comment.commentId} />
+        ))}
+      </ScrollView>
       <CreateComment autoFocus={false} postId={postId} />
     </>
   )

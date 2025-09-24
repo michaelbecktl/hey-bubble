@@ -3,7 +3,7 @@ import Feather from '@expo/vector-icons/Feather'
 import { Colors } from '@/constants/Colors'
 
 type Props = {
-  position?: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'
+  position?: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' | 'none'
   type?: 'x' | 'plus' | 'send' | 'phone' | 'search'
   margin?: number
   size?: number
@@ -12,7 +12,7 @@ type Props = {
 }
 
 export default function ExitButton({
-  position = 'topLeft',
+  position = 'none',
   type = 'x',
   margin = 0,
   size = 24,
@@ -80,4 +80,5 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
   },
+  none: { position: 'static' },
 })

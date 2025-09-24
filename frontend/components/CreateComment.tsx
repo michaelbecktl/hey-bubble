@@ -1,12 +1,17 @@
 import { Colors } from '@/constants/Colors'
-import { CommentDTO, UserProfile } from '@/models/models'
-import { StyleSheet, View, TextInput } from 'react-native'
+import { CommentDTO } from '@/models/models'
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native'
 import ProfilePhoto from './ProfilePhoto'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import BadgeButton from './BadgeButton'
 import { useUser } from '@/client/hooks/user'
 import { useComment } from '@/client/hooks/comment'
-import { router } from 'expo-router'
 
 type Props = {
   postId: number
@@ -36,57 +41,78 @@ function CreateComment({ postId, autoFocus }: Props) {
 
   return (
     <>
-      <View style={styles.container}>
-        <View style={styles.photo}>
-          <ProfilePhoto source={currentUser.profilePhoto} type="small" />
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={55}
+      >
+        <View style={styles.padding}>
+          <View style={styles.photo}>
+            <ProfilePhoto source={currentUser.profilePhoto} type="small" />
+          </View>
+          <View style={styles.textContainer}>
+            <TextInput
+              style={[styles.textField]}
+              placeholder="Write a comment!"
+              placeholderTextColor={Colors.subText}
+              value={text}
+              onChangeText={onChangeText}
+              multiline={true}
+              autoFocus={autoFocus}
+            />
+          </View>
+          <View style={styles.buttonContainer}>
+            <BadgeButton
+              size={24}
+              borderless={true}
+              type="send"
+              onPress={handleComment}
+            />
+          </View>
         </View>
-        <View style={styles.textContainer}>
-          <TextInput
-            style={[styles.textField, text === '' && styles.placeholder]}
-            placeholder="Write a comment!"
-            value={text}
-            onChangeText={onChangeText}
-            multiline={true}
-            autoFocus={autoFocus}
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <BadgeButton
-            position="topRight"
-            size={20}
-            borderless={true}
-            type="send"
-            onPress={handleComment}
-          />
-        </View>
-      </View>
+      </KeyboardAvoidingView>
     </>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.background,
+    position: 'absolute',
     justifyContent: 'center',
     flexDirection: 'row',
-    marginBottom: 2,
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  padding: {
     flex: 1,
-    padding: 5,
+    flexDirection: 'row',
+    backgroundColor: Colors.background,
+    paddingHorizontal: 5,
+    paddingTop: 10,
+    paddingBottom: 45,
   },
-  photo: { marginRight: 10 },
+  photo: {
+    marginRight: 3,
+    flex: 1,
+    marginVertical: 'auto',
+    alignItems: 'center',
+  },
   textContainer: {
-    flexGrow: 5,
+    flex: 8,
+    height: 42,
+    alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor: Colors.textfield,
+    borderRadius: 15,
   },
-  buttonContainer: { marginTop: 5, marginRight: 5 },
+  buttonContainer: { flex: 1, marginVertical: 'auto', alignItems: 'center' },
   textField: {
-    fontSize: 13,
+    marginHorizontal: 12,
+    marginVertical: 'auto',
+    alignItems: 'center',
+    fontSize: 16,
     color: Colors.text,
-    borderRadius: 5,
-    height: 32,
-    marginVertical: 5,
-  },
-  placeholder: {
-    color: Colors.subText,
   },
 })
 

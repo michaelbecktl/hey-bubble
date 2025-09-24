@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, ScrollView } from 'react-native'
 import UserPost from '../UserPost'
 import { usePost } from '@/client/hooks/post'
 import { Post } from '@/models/models'
@@ -12,13 +12,15 @@ function NewsFeed() {
   const posts: Post[] = postQuery.data
 
   return (
-    <View style={styles.container}>
-      {posts.map((post) => {
-        return (
-          <UserPost post={post} commentsVisible={false} key={post.postId} />
-        )
-      })}
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        {posts.map((post) => {
+          return (
+            <UserPost post={post} commentsVisible={false} key={post.postId} />
+          )
+        })}
+      </View>
+    </ScrollView>
   )
 }
 
