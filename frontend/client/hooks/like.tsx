@@ -39,17 +39,17 @@ export function useLikeMutation<TData = unknown, TVariables = unknown>(
 }
 
 export function useAddLikeToPost(request: LikeRequest) {
-  return useLikeMutation(() => API.addLikeToPost(request), 'post')
+  return useLikeMutation(() => API.addLikeToPost(request), 'posts')
 }
 
 export function useRemoveLikeFromPost(request: LikeRequest) {
-  return useLikeMutation(() => API.removeLikeFromPost(request), 'post')
+  return useLikeMutation(() => API.removeLikeFromPost(request), 'posts')
 }
 
 export function useAddLikeToComment(request: LikeRequest) {
-  return useLikeMutation(() => API.addLikeToComment(request), 'comment')
+  return useLikeMutation(() => API.addLikeToComment(request), 'comments')
 }
 
 export function useRemoveLikeFromComment(request: LikeRequest) {
-  return useLikeMutation(() => API.removeLikeFromComment(request), 'comment')
+  return useLikeMutation(() => API.removeLikeFromComment(request), 'comments')
 }

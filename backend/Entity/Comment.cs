@@ -22,7 +22,7 @@ namespace Backend.Entity
     public DateTime? UpdatedAt { get; set; }
     public string? MediaUrl { get; set; }
     public string? MediaType { get; set; }
-    public int? LikeCount { get; set; }
+    public int LikeCount { get; set; } = 0;
 
     public Post Post { get; set; } = null!;
     public User User { get; set; } = null!;

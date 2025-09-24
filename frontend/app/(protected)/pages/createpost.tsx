@@ -15,6 +15,7 @@ function CreatePost() {
   const navigation = useNavigation()
 
   async function handlePost() {
+    if (text === '') return
     await queryPosts.useCreatePost.mutateAsync({ content: text })
     router.replace('/')
   }

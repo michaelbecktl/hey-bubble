@@ -18,9 +18,9 @@ namespace Backend.Entity
     public DateTime? UpdatedAt { get; set; }
     public string? MediaUrl { get; set; }
     public string? MediaType { get; set; }
-    public int? LikeCount { get; set; }
+    public int LikeCount { get; set; } = 0;
 
-    public int? CommentCount { get; set; }
+    public int CommentCount { get; set; } = 0;
 
     public User User { get; set; } = null!;
 

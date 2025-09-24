@@ -3,18 +3,20 @@ import Feather from '@expo/vector-icons/Feather'
 import { Colors } from '@/constants/Colors'
 
 type Props = {
-  position?: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'
+  position?: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' | 'none'
   type?: 'x' | 'plus' | 'send' | 'phone' | 'search'
   margin?: number
   size?: number
+  borderless?: boolean
   onPress: () => void
 }
 
 export default function ExitButton({
-  position = 'topLeft',
+  position = 'none',
   type = 'x',
   margin = 0,
   size = 24,
+  borderless = false,
   onPress,
 }: Props) {
   const iconColor = Colors.secondary,
@@ -24,7 +26,9 @@ export default function ExitButton({
     <View style={[styles.container, styles[position], { margin: margin }]}>
       <Pressable
         onPress={onPress}
-        style={({ pressed }) => [styles.button, pressed && styles.activeButton]}
+        style={({ pressed }) =>
+          borderless ? [] : [styles.button, pressed && styles.activeButton]
+        }
       >
         {(pressed) => (
           <Feather
@@ -76,4 +80,5 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
   },
+  none: { position: 'static' },
 })

@@ -45,3 +45,16 @@ export interface PostComment {
   likeCount?: number | null
   isLikedByUser: boolean
 }
+
+export interface PostDTO {
+  content: string
+  mediaUrl?: string | null
+  mediaType?: string | null
+}
+
+export interface CommentDTO {
+  postId: number
+  content: string
+  mediaUrl?: string | null
+  mediaType?: string | null
+}
