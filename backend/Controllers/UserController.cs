@@ -93,7 +93,7 @@ public class UserController : ControllerBase
   public async Task<IActionResult> Login([FromBody] UserLogin userLogin)
   {
     var token = await _userService.LoginAsync(userLogin);
-    if (User is null)
+    if (token is null)
       return Unauthorized("Invalid username and password");
 
     Console.WriteLine("Test Console Write:" + token);

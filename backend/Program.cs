@@ -29,6 +29,13 @@ else
   builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+
+
+
+  builder.WebHost.UseUrls(mobileAppUrl ?? "https://localhost:7031;http://localhost:5218"); // !! REMOVE THIS IF PHYSICAL MOBILE TESTING NOT REQUIRED !! //
+
+  }
+
   builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -50,8 +57,6 @@ else
   builder.Services.AddScoped<ICommentService, CommentService>();
   builder.Services.AddScoped<ILikeService, LikeService>();
 
-
-  builder.WebHost.UseUrls(mobileAppUrl ?? "https://localhost:7031;http://localhost:5218"); // !! REMOVE THIS IF PHYSICAL MOBILE TESTING NOT REQUIRED !! //
   builder.Services.AddCors(options =>
   {
     options.AddPolicy(name: "AllowOrigins",
@@ -62,7 +67,6 @@ else
                               .AllowAnyMethod();
                       });
   });
-  }
 
   var app = builder.Build();
 
