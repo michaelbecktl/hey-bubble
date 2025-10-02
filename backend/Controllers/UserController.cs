@@ -96,9 +96,6 @@ public class UserController : ControllerBase
     if (token is null)
       return Unauthorized("Invalid username and password");
 
-    Console.WriteLine("Test Console Write:" + token);
-    
-
     return Ok(token);
   }
 

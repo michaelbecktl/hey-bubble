@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using Backend.Entity;
 public class RegistrationTests : IClassFixture<TestingWebAppFactory<Program>>
 {
@@ -9,7 +10,7 @@ public class RegistrationTests : IClassFixture<TestingWebAppFactory<Program>>
 
     public required string Password { get; set; }
   }
-  
+
   public class UserDTO
   {
     public int Id { get; set; }
@@ -54,5 +55,26 @@ public class RegistrationTests : IClassFixture<TestingWebAppFactory<Program>>
     // User should be able to login with correct credentials //
     Assert.True(validResponse.IsSuccessStatusCode);
     Assert.False(invalidResponse.IsSuccessStatusCode);
+  }
+  
+    public async Task<string> GetToken(string username, string password)
+  {
+    var user = new UserLogin { Username = username, Password = password };
+    var response = await _client.PostAsJsonAsync("/api/v1/user/login", user);
+    return await response.Content.ReadAsStringAsync();
+  }
+
+
+
+  [Fact]
+  public async Task ViewAllPosts()
+  {
+    var token = await GetToken("bobuser", "bobtest");
+    _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+    var response = await _client.GetAsync("/api/v1/post");
+    Console.WriteLine($"Bearer {token}");
+    Console.WriteLine("Response Result: " + response);
+
+    Assert.True(response.IsSuccessStatusCode);
   }
 }
