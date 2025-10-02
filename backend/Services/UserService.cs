@@ -18,7 +18,10 @@ public class UserService(AppDbContext context, IConfiguration configuration) : I
     var existingUser = await context.Users
     .FirstOrDefaultAsync(users => users.Username == userLogin.Username);
 
-    if (existingUser == null) return null;
+    if (existingUser == null){
+      Console.WriteLine($"No such user as {userLogin.Username}, invalid username/password");
+      return null;
+    }
 
     bool isMatchingPassword = BCrypt.Net.BCrypt.Verify(userLogin.Password, existingUser.Password);
     if (!isMatchingPassword) return null;
